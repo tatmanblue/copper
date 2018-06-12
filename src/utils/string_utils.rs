@@ -37,3 +37,55 @@ impl StringUtils for String {
         return left_most.to_owned();
     }
 }
+
+#[cfg(test)]
+mod string_utils_tests {
+
+    use super::StringUtils;
+
+    #[test]
+    fn left_four_string_more_than_four_len() {
+        let test: String = "123457890".to_string();
+
+        let left: String = test.from_left(4);
+
+        assert_eq!(left, "1234".to_string());
+    }
+
+    #[test]
+    fn left_four_string_less_than_four_len() {
+        let test: String = "123".to_string();
+
+        let left: String = test.from_left(4);
+
+        assert_eq!(left, test);
+
+    }
+
+    #[test]
+    fn left_four_string_is_four_len() {
+        let test: String = "1234".to_string();
+
+        let left: String = test.from_left(4);
+
+        assert_eq!(left, test);
+    }
+
+    #[test]
+    fn string_is_empty() {
+        let test: String = "".to_string();
+
+        let left: String = test.from_left(4);
+
+        assert_eq!(left, test);
+    }
+
+    #[test]
+    fn left_one_string() {
+        let test: String = "12345678901234567890".to_string();
+
+        let left: String = test.from_left(1);
+
+        assert_eq!(left, "1".to_string());
+    }
+}

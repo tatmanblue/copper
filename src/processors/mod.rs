@@ -1,7 +1,4 @@
 //!
 
 // Public modules
-pub mod get_test_lines;
-
-// Private modules
-mod string_utils;
+pub mod process_for_individual_test_results;
