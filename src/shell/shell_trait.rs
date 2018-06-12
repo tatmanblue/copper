@@ -1,5 +1,5 @@
 //!
 
-pub trait Shell {
+pub trait ShellTrait {
     fn open_index_html();
 }

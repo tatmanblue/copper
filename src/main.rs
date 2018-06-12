@@ -11,9 +11,20 @@ extern crate preferences;
 #[macro_use] extern crate lazy_static;
 #[macro_use] extern crate log;
 
-pub mod shell_trait;
+pub mod input;
+pub mod processors;
+pub mod shell;
 pub mod tests;
 
+use input::input_trait::InputTrait;
+use input::from_stdin::StdReader;
+
 fn main() {
-    println!("Hello, world!");
+
+    debug!("rust-test-parser has started ...");
+
+    let results: Vec<String> = StdReader::read_all();
+
+    println!("---------------------");
+    println!("{:?}", results);
 }
