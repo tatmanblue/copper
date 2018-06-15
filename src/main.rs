@@ -31,6 +31,7 @@ use ansi_term::*;
 
 use input::input_trait::InputTrait;
 use input::from_stdin::StdReader;
+use output::console::ConsoleOutput;
 use output::html_generator::HtmlOutput;
 use output::output_trait::OutputTrait;
 use processors::process_for_individual_test_results::ProcessIndividualTestResults;
@@ -64,9 +65,8 @@ fn main() {
 
     let organized_results = ProcessIndividualTestResults::group_test_results(&results);
 
-    organized_results.print();
-
-    HtmlOutput::generate(&organized_results);
+    ConsoleOutput{}.generate(&organized_results);
+    HtmlOutput{}.generate(&organized_results);
 
 }
 

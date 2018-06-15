@@ -23,7 +23,7 @@ impl OutputTrait for HtmlOutput {
         converts OrganizedTestResults into html using the template at env.template_dir
         (which should be the same as in src/templates directory)
     */
-    fn generate(test_results : &OrganizedTestResults) {
+    fn generate(&self, test_results : &OrganizedTestResults) {
 
         let env :Environment = Environment::new();
         let template_search: String = format!("{}{}", env.template_dir, "/**/*");
@@ -34,8 +34,11 @@ impl OutputTrait for HtmlOutput {
         let mut context: Context = Context::new();
 
         context.add("title", &"test results");
+        trace!("success test count {}", test_results.success.len());
         context.add("successful_tests",&test_results.success);
-        context.add("ignored_tests",&test_results.skipped);
+        trace!("ignored test count {}", test_results.skipped.len());
+        context.add("skipped_tests",&test_results.skipped);
+        trace!("failed test count {}", test_results.failed.len());
         context.add("failed_tests",&test_results.failed);
         let rendered = tera.render("index.html", &context).expect("Failed to render template");
 

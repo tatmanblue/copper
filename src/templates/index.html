@@ -16,25 +16,24 @@
 <h4>{{ title|title }}</h4>
 <div class="container">
 
-    <!-- Ignored test results -->
-    {% if ignored_tests |length > 1 %}
-    <div class="panel-group">
+    skipped tests! {{ skipped_tests | length }}
+    <!-- Skipped test results -->
+    <!--{% if skipped_tests |length > 1 %}-->
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4 class="panel-title">
-            <a data-toggle="collapse" href="#ignored_group_collapse">Ignored tests {{ ignored_tests | length }}</a>
+            <a data-toggle="collapse" href="#ignored_group_collapse">{{ skipped_tests | length }} skipped tests </a>
           </h4>
         </div>
         <div id="ignored_group_collapse" class="panel-collapse collapse">
           <div class="panel-body">
-                {% for test in ignored_tests %}
+                {% for test in skipped_tests %}
                     <div>{{ test.name }}</div>
                 {% endfor %}
           </div>
         </div>
       </div>
-    </div>
-    {% endif %}
+    <!--{% endif %}-->
 
     <!-- Successful test results -->
     {% if successful_tests |length > 1 %}
@@ -42,7 +41,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4 class="panel-title">
-            <a data-toggle="collapse" href="#success_group_collapse">Successful tests {{ successful_tests | length }}</a>
+            <a data-toggle="collapse" href="#success_group_collapse">{{ successful_tests | length }} successful tests </a>
           </h4>
         </div>
         <div id="success_group_collapse" class="panel-collapse collapse">
@@ -62,7 +61,7 @@
       <div class="panel panel-danger">
         <div class="panel-heading">
           <h4 class="panel-title">
-              <a data-toggle="collapse" href="#error_group_collapse">Failed tests #{{ failed_tests | length }}</a>
+              <a data-toggle="collapse" href="#error_group_collapse">{{ failed_tests | length }} failed tests </a>
           </h4>
         </div>
         <div id="error_group_collapse" class="panel-collapse collapse">
