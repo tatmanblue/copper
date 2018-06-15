@@ -3,10 +3,13 @@
 use std::fs::File;
 use std::io::Write;
 
+use tera::{Context, Tera};
+
 use output::output_trait::OutputTrait;
 use processors::types::OrganizedTestResults;
 use utils::environment::Environment;
-use tera::{Context, Tera};
+use utils::random::rand_string;
+
 
 
 /**
@@ -36,9 +39,9 @@ impl OutputTrait for HtmlOutput {
         context.add("failed_tests",&test_results.failed);
         let rendered = tera.render("index.html", &context).expect("Failed to render template");
 
-        // println!("{}", rendered);
+        trace!("results expected at: '{}'", env.results_dir);
 
-        let html_file: String = format!("{}/1.html", env.results_dir);
+        let html_file: String = format!("{}/{}.html", env.results_dir, rand_string(8));
         let mut f = File::create(html_file).expect("Unable to create file");
         f.write_all(rendered.as_bytes()).expect("Unable to write data");
     }

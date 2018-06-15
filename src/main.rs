@@ -7,6 +7,7 @@ extern crate ansi_term;
 extern crate env_logger;
 extern crate libc;
 extern crate preferences;
+extern crate rand;
 extern crate serde;
 extern crate serde_json;
 extern crate tera;
