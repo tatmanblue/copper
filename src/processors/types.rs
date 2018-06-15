@@ -1,11 +1,12 @@
 //!
 
 use ansi_term::Color::*;
+use serde::{Deserialize, Serialize};
 
 /**
     a single test result
 */
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct IndividualTestResults {
     pub name : String,
     pub result : String
@@ -17,6 +18,7 @@ pub struct IndividualTestResults {
             failed
             skipped
 */
+#[derive(Debug, Serialize, Deserialize)]
 pub struct OrganizedTestResults {
     pub success : Vec<IndividualTestResults>,
     pub failed : Vec<IndividualTestResults>,

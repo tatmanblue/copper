@@ -7,10 +7,13 @@ extern crate ansi_term;
 extern crate env_logger;
 extern crate libc;
 extern crate preferences;
+extern crate serde;
+extern crate serde_json;
 extern crate tera;
 
 #[macro_use] extern crate lazy_static;
 #[macro_use] extern crate log;
+#[macro_use] extern crate serde_derive;
 
 pub mod input;
 pub mod output;
@@ -30,6 +33,7 @@ use input::from_stdin::StdReader;
 use output::html_generator::HtmlOutput;
 use output::output_trait::OutputTrait;
 use processors::process_for_individual_test_results::ProcessIndividualTestResults;
+use utils::environment::Environment;
 use utils::logger::init_log;
 
 
@@ -48,9 +52,8 @@ fn main() {
     init_log();
 
     debug!("rust-test-parser has started ...");
-    if env::args().find(|a| a == "-h" || a == "--help").is_some() {
-        return print_help();
-    }
+
+    Environment::exit_if_print_help();
 
     let results: Vec<String> = StdReader::read_all();
     let results: Vec<String> = ProcessIndividualTestResults::find_test_lines(&results);
