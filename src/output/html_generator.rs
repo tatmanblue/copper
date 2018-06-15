@@ -29,13 +29,11 @@ impl OutputTrait for HtmlOutput {
 
         context.add("title", &"test results");
         context.add("content", &"stuff stuff stuff stuff");
-        context.add("successful_tests",
-                &test_results.success);
-        context.add("ignored_tests",
-                &test_results.skipped);
-        context.add("failed_tests",
-                &test_results.failed);
+        context.add("successful_tests",&test_results.success);
+        context.add("ignored_tests",&test_results.skipped);
+        context.add("failed_tests",&test_results.failed);
         let rendered = tera.render("index.html", &context).expect("Failed to render template");
+
         println!("{}", rendered);
 
     }

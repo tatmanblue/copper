@@ -12,12 +12,29 @@
 <h1>{{ title|title }}</h1>
 <p>{{ content }}</p>
 <div class="container">
-    {% if successful_tests |length > 1 %}
-        <ul>
-        {% for test in successful_tests %}
-            <li>{{ test.name }}</li>
+    {% if ignored_tests |length > 1 %}
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#ignored_tests_panel">Ignored tests {{ ignored_tests | length }}</button>
+      <div id="ignored_tests_panel" class="collapse">
+        {% for test in ignored_tests %}
+            <div>{{ test.name }}</div>
         {% endfor %}
-        </ul>
+      </div>
+    {% endif %}
+    {% if successful_tests |length > 1 %}
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#success_tests_panel">Successful tests {{ successful_tests | length }}</button>
+      <div id="success_tests_panel" class="collapse">
+        {% for test in successful_tests %}
+            <div>{{ test.name }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if failed_tests |length > 1 %}
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#failed_tests_panel">Failed tests {{ failed_tests | length }}</button>
+      <div id="failed_tests_panel" class="collapse">
+        {% for test in failed_tests %}
+            <div>{{ test.name }}</div>
+        {% endfor %}
+      </div>
     {% endif %}
 </div>
 </body>
