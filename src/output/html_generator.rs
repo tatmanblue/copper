@@ -1,5 +1,8 @@
 //!  http://siciarz.net/24-days-rust-tera/
 
+use std::fs::File;
+use std::io::Write;
+
 use output::output_trait::OutputTrait;
 use processors::types::OrganizedTestResults;
 use utils::environment::Environment;
@@ -28,13 +31,15 @@ impl OutputTrait for HtmlOutput {
         let mut context: Context = Context::new();
 
         context.add("title", &"test results");
-        context.add("content", &"stuff stuff stuff stuff");
         context.add("successful_tests",&test_results.success);
         context.add("ignored_tests",&test_results.skipped);
         context.add("failed_tests",&test_results.failed);
         let rendered = tera.render("index.html", &context).expect("Failed to render template");
 
-        println!("{}", rendered);
+        // println!("{}", rendered);
 
+        let html_file: String = format!("{}/1.html", env.results_dir);
+        let mut f = File::create(html_file).expect("Unable to create file");
+        f.write_all(rendered.as_bytes()).expect("Unable to write data");
     }
 }
