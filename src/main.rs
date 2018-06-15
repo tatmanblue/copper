@@ -7,11 +7,13 @@ extern crate ansi_term;
 extern crate env_logger;
 extern crate libc;
 extern crate preferences;
+extern crate tera;
 
 #[macro_use] extern crate lazy_static;
 #[macro_use] extern crate log;
 
 pub mod input;
+pub mod output;
 pub mod processors;
 pub mod shell;
 pub mod tests;

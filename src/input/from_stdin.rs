@@ -1,7 +1,7 @@
 //!  InputTrait implementation for reading input via stdin (pipe)
 
 
-use std::io::{self, Read, BufRead};
+use std::io::{self, Read, BufRead, Stdin};
 use input::input_trait::InputTrait;
 
 pub struct StdReader { }
@@ -19,7 +19,7 @@ impl InputTrait for StdReader {
 
         let mut results: Vec<String> = Vec::new();
 
-        let stdin = io::stdin();
+        let stdin: Stdin = io::stdin();
         let lines_iterator = stdin.lock().lines();
 
         for line in lines_iterator {
