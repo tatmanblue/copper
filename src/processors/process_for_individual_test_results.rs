@@ -1,4 +1,4 @@
-//!
+//! for processing and organizing all lines with expectation they are cargo test output
 
 use ansi_term::Color::*;
 use utils::string_utils::StringUtils;
@@ -40,6 +40,18 @@ impl ProcessIndividualTestResults {
             success
             failed
             skipped
+
+        test results look like this:
+        ```test tests::passing::pass_one ... ok```
+
+        for failed tests, the additional data of the test are picked up
+
+        failed tests include additional data in the multi-line format of
+        ```
+        ---- tests::failing::failing_one stdout ----
+	        thread 'tests::failing::failing_one' panicked at 'this is a failing test', src/tests/failing.rs:4:5
+        note: Run with `RUST_BACKTRACE=1` for a backtrace.
+        ```
     */
     pub fn group_test_results(input : &Vec<String>) -> OrganizedTestResults {
         let mut results: OrganizedTestResults = OrganizedTestResults::new();

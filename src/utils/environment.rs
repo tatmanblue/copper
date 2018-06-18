@@ -1,16 +1,31 @@
-//!
+//! Enviroment type is responsible for data that affects the running enviroment of rust-test-parser
 
 use std::process::exit;
 use std::env;
 
 use ansi_term::*;
 
+/**
+    Contains, finds and builds any environmental data the user controls for running
+    rust-test-parser
+*/
 pub struct Environment {
     /**
         expectation is this will be $HOME/.rust-test-parser/templates
     */
     pub template_dir : String,
+    /**
+        expectation is this will be $HOME/.rust-test-parser/results
+    */
     pub results_dir : String,
+    /**
+        default is "default" or "html" aka web page is generated with the test results
+    */
+    pub output_format: String,
+    /**
+        default is false.  when true, output also appears in the console
+    */
+    pub include_console_format: bool,
 }
 
 impl Environment {
@@ -55,6 +70,8 @@ impl Environment {
         return Environment {
             template_dir,
             results_dir,
+            output_format: "default".to_string(),
+            include_console_format: false,
         };
     }
 

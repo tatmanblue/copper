@@ -1,4 +1,5 @@
-//!  http://siciarz.net/24-days-rust-tera/
+//! generates an html page using OrganizedTestResults (the output of cargo test)
+//! http://siciarz.net/24-days-rust-tera/
 
 use std::fs::File;
 use std::io::Write;
@@ -14,6 +15,7 @@ use utils::random::rand_string;
 
 
 /**
+    Generator for an html page using OrganizedTestResults (the output of cargo test)
 */
 pub struct HtmlOutput {
 

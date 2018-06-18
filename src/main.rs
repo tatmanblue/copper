@@ -61,6 +61,7 @@ fn main() {
     Environment::exit_if_print_help();
 
     trace!("reading configuration");
+    let env:Environment = Environment::new();
 
     trace!("collecting input");
     let results: Vec<String> = StdReader::read_all();
@@ -68,8 +69,11 @@ fn main() {
     let organized_results = ProcessIndividualTestResults::group_test_results(&results);
 
     trace!("generating output");
-    OutputFactory::get("debug").generate(&organized_results).open();
-    OutputFactory::get("default").generate(&organized_results).open();
+    if true == env.include_console_format {
+        OutputFactory::get("debug").generate(&organized_results).open();
+    }
+
+    OutputFactory::get(&env.output_format).generate(&organized_results).open();
 
 }
 
