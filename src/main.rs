@@ -7,6 +7,7 @@ extern crate ansi_term;
 extern crate env_logger;
 extern crate libc;
 extern crate preferences;
+extern crate open;
 extern crate rand;
 extern crate serde;
 extern crate serde_json;
@@ -35,6 +36,7 @@ use output::console::ConsoleOutput;
 use output::html_generator::HtmlOutput;
 use output::output_trait::OutputTrait;
 use processors::process_for_individual_test_results::ProcessIndividualTestResults;
+use shell::shell_trait::ShellTrait;
 use utils::environment::Environment;
 use utils::logger::init_log;
 
@@ -66,7 +68,7 @@ fn main() {
     let organized_results = ProcessIndividualTestResults::group_test_results(&results);
 
     ConsoleOutput{}.generate(&organized_results);
-    HtmlOutput{}.generate(&organized_results);
+    HtmlOutput{}.generate(&organized_results).open();
 
 }
 

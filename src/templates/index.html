@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <title>{{ title|title }}</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -16,27 +17,28 @@
 <h4>{{ title|title }}</h4>
 <div class="container">
 
-    skipped tests! {{ skipped_tests | length }}
     <!-- Skipped test results -->
-    <!--{% if skipped_tests |length > 1 %}-->
+    {% if who_freaking_knows |length > 0 %}
+    <div class="panel-group">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4 class="panel-title">
-            <a data-toggle="collapse" href="#ignored_group_collapse">{{ skipped_tests | length }} skipped tests </a>
+            <a data-toggle="collapse" href="#skipped_group_collapse">{{ who_freaking_knows | length }} skipped tests </a>
           </h4>
         </div>
-        <div id="ignored_group_collapse" class="panel-collapse collapse">
+        <div id="skipped_group_collapse" class="panel-collapse collapse">
           <div class="panel-body">
-                {% for test in skipped_tests %}
+                {% for test in who_freaking_knows %}
                     <div>{{ test.name }}</div>
                 {% endfor %}
           </div>
         </div>
       </div>
-    <!--{% endif %}-->
+    </div>
+    {% endif %}
 
     <!-- Successful test results -->
-    {% if successful_tests |length > 1 %}
+    {% if successful_tests |length > 0 %}
     <div class="panel-group">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -56,7 +58,7 @@
     {% endif %}
 
     <!-- error test results -->
-    {% if failed_tests |length > 1 %}
+    {% if failed_tests |length > 0 %}
     <div class="panel-group">
       <div class="panel panel-danger">
         <div class="panel-heading">

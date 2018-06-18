@@ -4,5 +4,5 @@
 
 */
 pub trait ShellTrait {
-    fn open();
+    fn open(&self);
 }

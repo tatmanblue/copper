@@ -57,7 +57,7 @@ impl ProcessIndividualTestResults {
                 match test_result.result.as_ref() {
                     "ok" => results.success.push(test_result),
                     "FAILED" => results.failed.push(test_result),
-                    "ignored" => results.skipped.push(test_result),
+                    "ignored" =>  results.skipped.push(test_result),
                     _ => error!("this line didn't pattern match as expected '{:?}", test_result),
                 }
 

@@ -23,6 +23,7 @@ pub struct OrganizedTestResults {
     pub success : Vec<IndividualTestResults>,
     pub failed : Vec<IndividualTestResults>,
     pub skipped : Vec<IndividualTestResults>,
+    pub total: i32
 }
 
 impl OrganizedTestResults {
@@ -33,6 +34,6 @@ impl OrganizedTestResults {
         let success : Vec<IndividualTestResults> = Vec::new();
         let failed : Vec<IndividualTestResults> = Vec::new();
         let skipped : Vec<IndividualTestResults> = Vec::new();
-        return OrganizedTestResults {  success, failed, skipped };
+        return OrganizedTestResults {  success, failed, skipped, total : 0 };
     }
 }
