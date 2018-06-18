@@ -1,5 +1,5 @@
 # rust-test-output-parser
-Parser of rust unit test output (cargo test command)
+This application provides a pretty UI to "cargo test" output. 
 
 # Installation
 The following steps are required prior to running:
