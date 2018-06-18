@@ -29,6 +29,8 @@ impl OutputFactory {
         match name.as_ref() {
             "console" => OutputTypes::Console(ConsoleOutput {} ),
             "html" => OutputTypes::Html(HtmlOutput {} ),
+            "debug" =>  OutputTypes::Console(ConsoleOutput {} ),
+            "default" => OutputTypes::Html(HtmlOutput {} ),
             &_ => {
                 eprintln!("Error in OutputFactory processing get for name of '{}'", name);
                 panic!("Error in OutputFactory processing get request")

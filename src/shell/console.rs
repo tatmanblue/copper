@@ -8,6 +8,6 @@ pub struct Console {
 
 impl ShellTrait for Console {
     fn open(&self) {
-        unimplemented!()
+        trace!("opening at console...output already created");
     }
 }

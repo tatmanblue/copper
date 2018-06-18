@@ -33,6 +33,7 @@ use ansi_term::*;
 use input::input_trait::InputTrait;
 use input::from_stdin::StdReader;
 use output::console::ConsoleOutput;
+use output::factory::OutputFactory;
 use output::html_generator::HtmlOutput;
 use output::output_trait::OutputTrait;
 use processors::process_for_individual_test_results::ProcessIndividualTestResults;
@@ -59,16 +60,16 @@ fn main() {
 
     Environment::exit_if_print_help();
 
+    trace!("reading configuration");
+
+    trace!("collecting input");
     let results: Vec<String> = StdReader::read_all();
     let results: Vec<String> = ProcessIndividualTestResults::find_test_lines(&results);
-
-    trace!("------- after processing input --------------");
-    trace!("{:?}", results);
-
     let organized_results = ProcessIndividualTestResults::group_test_results(&results);
 
-    ConsoleOutput{}.generate(&organized_results);
-    HtmlOutput{}.generate(&organized_results).open();
+    trace!("generating output");
+    OutputFactory::get("debug").generate(&organized_results).open();
+    OutputFactory::get("default").generate(&organized_results).open();
 
 }
 

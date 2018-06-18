@@ -3,3 +3,4 @@
 
 #[cfg(test)] pub mod passing;
 #[cfg(test)] pub mod failing;
+#[cfg(test)] pub mod doc_tests;
