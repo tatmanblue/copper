@@ -5,6 +5,7 @@
 pub trait StringUtils {
     fn from_right(&self, count : usize) -> String;
     fn from_left(&self, count: usize) -> String;
+    fn length(&self) -> usize;
     fn trimmed(&self) -> String;
 }
 
@@ -36,6 +37,10 @@ impl StringUtils for String {
         let left_most: String = self.chars().take(count).collect::<String>();
 
         return left_most.to_owned();
+    }
+
+    fn length(&self) -> usize {
+        return self.chars().count();
     }
 
     fn trimmed(&self) -> String {

@@ -3,7 +3,7 @@
 use ansi_term::Color::*;
 use utils::string_utils::StringUtils;
 
-use processors::types::{IndividualTestResults, OrganizedTestResults};
+use processors::types::{IndividualTestResults, OrganizedTestResults, TestSetFunctions, TestSetCollection};
 
 enum LineTypes {
     UnitTest,
@@ -63,6 +63,10 @@ impl ProcessIndividualTestResults {
 
         for line in input {
             let left: String = line.trimmed().from_left(9);
+
+            if 0 == left.length() {
+                continue;
+            }
 
             if "failures:" == left {
                 if false == found_section {
@@ -129,16 +133,47 @@ impl ProcessIndividualTestResults {
     }
 
     /**
+        expect strings to be ordered by their logical output.  eg:
+        ---- tests::failing::failing_one stdout ----
+            thread 'tests::failing::failing_one' panicked at 'this is a failing test', src/tests/failing.rs:4:5
+        note: Run with `RUST_BACKTRACE=1` for a backtrace.
+
+        ---- tests::failing::failing_two stdout ----
+            thread 'tests::failing::failing_two' panicked at 'this is a failing test', src/tests/failing.rs:9:5
     */
-    pub fn merge_test_errors_into_results(input : &Vec<String>, mut results : &OrganizedTestResults) {
+    pub fn merge_test_errors_into_results(input : &Vec<String>, results : &mut OrganizedTestResults) {
 
+        let mut test_name: String = str2string!("");
+
+        for line in input {
+            let left: String = line.trimmed().from_left(4);
+
+            if 0 == left.length() {
+                continue;
+            }
+
+            if "----" == left {
+                // have start of test data
+
+                let parts: Vec<&str> = line.split(" ").collect();
+                let mut test_name: String = parts[1].to_string();
+
+                println!("found test => {}", test_name);
+
+
+            } else {
+                // otherwise we have test data details
+                println!("      data => {}", line);
+                results.failed.update_results(&test_name, &line);
+            }
+        }
     }
-
 }
 
 #[cfg(test)]
 mod process_for_individual_test_results_tests {
 
+    use processors::types::{IndividualTestResults, OrganizedTestResults};
     use super::ProcessIndividualTestResults;
 
     #[test]
@@ -164,7 +199,53 @@ mod process_for_individual_test_results_tests {
         let results: Vec<String> = ProcessIndividualTestResults::find_error_details_lines(&lines);
 
         println!("results are => {:?}", results);
-        assert!(5 == results.len());
+        assert_eq!(5, results.len());
     }
 
+    #[test]
+    fn blank_lines_ignored_in_failures_section_success(){
+        let mut lines: Vec<String> = Vec::new();
+        lines.push(str2string!("        failures:"));
+        lines.push(str2string!("        "));
+        lines.push(str2string!("---- tests::failing::failing_one stdout ----"));
+        lines.push(str2string!("thread 'tests::failing::failing_one' panicked at 'this is a failing test', src/tests/failing.rs:4:5"));
+        lines.push(str2string!("note: Run with `RUST_BACKTRACE=1` for a backtrace."));
+        lines.push(str2string!("---- tests::failing::failing_two stdout ----"));
+        lines.push(str2string!(""));
+        lines.push(str2string!("thread 'tests::failing::failing_two' panicked at 'this is a failing test', src/tests/failing.rs:9:5"));
+        lines.push(str2string!("        failures:"));
+        lines.push(str2string!(" "));
+
+        let results: Vec<String> = ProcessIndividualTestResults::find_error_details_lines(&lines);
+
+        println!("results are => {:?}", results);
+        assert_eq!(5, results.len());
+    }
+
+    #[test]
+    fn aggregate_test_failure_data() {
+        let mut lines: Vec<String> = Vec::new();
+        lines.push(str2string!("        failures:"));
+        lines.push(str2string!("        "));
+        lines.push(str2string!("---- tests::failing::failing_one stdout ----"));
+        lines.push(str2string!("thread 'tests::failing::failing_one' panicked at 'this is a failing test', src/tests/failing.rs:4:5"));
+        lines.push(str2string!("note: Run with `RUST_BACKTRACE=1` for a backtrace."));
+        lines.push(str2string!("---- tests::failing::failing_two stdout ----"));
+        lines.push(str2string!(""));
+        lines.push(str2string!("thread 'tests::failing::failing_two' panicked at 'this is a failing test', src/tests/failing.rs:9:5"));
+        lines.push(str2string!("        failures:"));
+        lines.push(str2string!(" "));
+
+        let mut organized_tests: OrganizedTestResults = OrganizedTestResults::new();
+        let test_one: IndividualTestResults = IndividualTestResults{ name: str2string!("tests::failing::failing_one"), result: str2string!("")};
+
+        organized_tests.failed.push(test_one);
+
+        let results: Vec<String> = ProcessIndividualTestResults::find_error_details_lines(&lines);
+
+        ProcessIndividualTestResults::merge_test_errors_into_results(&results, &mut organized_tests);
+        println!("organized results are: {:?}", organized_tests);
+
+        
+    }
 }
