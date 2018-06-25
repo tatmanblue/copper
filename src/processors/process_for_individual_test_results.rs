@@ -29,7 +29,7 @@ impl ProcessIndividualTestResults {
         - or -
         test tests::passing::pass_one ... ok
     */
-    pub fn find_test_lines(input : &Vec<String>) -> Vec<String> {
+    pub fn find_summary_test_lines(input : &Vec<String>) -> Vec<String> {
         let mut results: Vec<String> = Vec::new();
 
         for line in input {
@@ -154,16 +154,11 @@ impl ProcessIndividualTestResults {
 
             if "----" == left {
                 // have start of test data
-
                 let parts: Vec<&str> = line.split(" ").collect();
-                let mut test_name: String = parts[1].to_string();
-
-                println!("found test => {}", test_name);
-
+                test_name = parts[1].to_string();
 
             } else {
                 // otherwise we have test data details
-                println!("      data => {}", line);
                 results.failed.update_results(&test_name, &line);
             }
         }
@@ -180,7 +175,7 @@ mod process_for_individual_test_results_tests {
     fn input_is_empty() {
         let empty_vec: Vec<String> = Vec::new();
 
-        let result_vec: Vec<String> = ProcessIndividualTestResults::find_test_lines(&empty_vec);
+        let result_vec: Vec<String> = ProcessIndividualTestResults::find_summary_test_lines(&empty_vec);
 
         assert_eq!(result_vec.len(), empty_vec.len());
     }
@@ -238,14 +233,19 @@ mod process_for_individual_test_results_tests {
 
         let mut organized_tests: OrganizedTestResults = OrganizedTestResults::new();
         let test_one: IndividualTestResults = IndividualTestResults{ name: str2string!("tests::failing::failing_one"), result: str2string!("")};
+        let test_two: IndividualTestResults = IndividualTestResults{ name: str2string!("tests::failing::failing_two"), result: str2string!("")};
 
         organized_tests.failed.push(test_one);
+        organized_tests.failed.push(test_two);
 
         let results: Vec<String> = ProcessIndividualTestResults::find_error_details_lines(&lines);
 
         ProcessIndividualTestResults::merge_test_errors_into_results(&results, &mut organized_tests);
-        println!("organized results are: {:?}", organized_tests);
 
-        
+        for test in organized_tests.failed {
+            println!("\ttest {} results {}", test.name, test.result);
+        }
+
+        assert!(false);
     }
 }

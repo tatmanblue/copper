@@ -49,7 +49,7 @@ impl TestSetFunctions for TestSetCollection {
             }
         }
 
-        panic!(format!("{} not found.", test_name))
+        panic!(format!("'{}' not found for find_by_name().", test_name))
     }
 
     fn index_of(&self, test_name: &String) -> usize {
@@ -60,12 +60,13 @@ impl TestSetFunctions for TestSetCollection {
             }
         }
 
-        panic!(format!("{} not found.", test_name))
+        panic!(format!("'{}' not found for index_of().", test_name))
     }
 
     fn update_results(&mut self, test_name: &String, test_results: &String) {
+        trace!("update_results => test_name '{}', test_results '{}'", test_name, test_results);
         let test = self.find_by_name(test_name);
-        test.result = test_results.to_string();
+        test.result = format!("{}.  {}", test.result, test_results.to_string());
     }
 }
 
@@ -100,6 +101,7 @@ impl OrganizedTestResults {
 mod types_test {
 
     use super::*;
+    use utils::logger::init_log;
 
     #[test]
     fn find_element_by_name_success() {
@@ -115,15 +117,21 @@ mod types_test {
 
     #[test]
     fn update_test_results_success() {
+
+        init_log();
+
         let test_name: String = str2string!("test_one");
         let changed_result: String = str2string!("this is the new stuff");
+
+
         let mut failed : TestSetCollection = TestSetCollection::new();
         let original_test : IndividualTestResults = IndividualTestResults { name : test_name.to_string(), result : str2string!("")};
         failed.push(original_test);
 
         failed.update_results(&test_name, &changed_result);
 
-        let updated_test = failed.find_by_name(&test_name);
+
+        let updated_test = failed.find_by_name(&test_name.to_string());
 
         assert_eq!(changed_result, updated_test.result);
         assert_eq!(test_name, updated_test.name);

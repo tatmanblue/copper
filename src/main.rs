@@ -55,9 +55,12 @@ fn main() {
     let env:Environment = Environment::new();
 
     trace!("collecting input");
-    let results: Vec<String> = StdReader::read_all();
-    let results: Vec<String> = ProcessIndividualTestResults::find_test_lines(&results);
-    let organized_results = ProcessIndividualTestResults::group_test_results(&results);
+    let all_test_lines: Vec<String> = StdReader::read_all();
+    let summary_lines: Vec<String> = ProcessIndividualTestResults::find_summary_test_lines(&all_test_lines);
+    let error_details: Vec<String> = ProcessIndividualTestResults::find_error_details_lines(&all_test_lines);
+    let mut organized_results = ProcessIndividualTestResults::group_test_results(&summary_lines);
+
+    ProcessIndividualTestResults::merge_test_errors_into_results(&error_details, &mut organized_results);
 
     trace!("generating output");
     if true == env.include_console_format {
