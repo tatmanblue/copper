@@ -22,6 +22,12 @@ impl PartialEq for IndividualTestResults {
     }
 }
 
+impl IndividualTestResults {
+    pub fn new(test_name: &String) -> IndividualTestResults {
+        return IndividualTestResults { name : test_name.to_string(), result : str2string!("")};
+    }
+}
+
 /**
     Collection of IndividualTestResults
 */

@@ -112,10 +112,7 @@ impl ProcessIndividualTestResults {
 
             if "..." == split[2] {
 
-                let test_result: IndividualTestResults = IndividualTestResults {
-                    name : split[1].to_string(),
-                    result : split[3].to_string(),
-                };
+                let test_result: IndividualTestResults = IndividualTestResults::new(&split[1].to_string());
 
                 match test_result.result.as_ref() {
                     "ok" => results.success.push(test_result),
