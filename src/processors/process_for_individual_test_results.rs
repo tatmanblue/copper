@@ -5,6 +5,14 @@ use utils::string_utils::StringUtils;
 
 use processors::types::{IndividualTestResults, OrganizedTestResults};
 
+enum LineTypes {
+    UnitTest,
+    IntegrationTest,
+    DocTest,
+    FailedTestDetails,
+    WhoKnows
+}
+
 /**
     Functions for processing an array of strings (assuming from input like stdin) that
     pattern match cargo test output, and organizing the data into result tests
@@ -30,6 +38,45 @@ impl ProcessIndividualTestResults {
             if "test" == left {
                 results.push(line.to_string());
             }
+        }
+
+        return  results;
+    }
+
+    /**
+        looking for this section and returning all strings until failures line is encountered again
+
+        failures:
+
+        ---- tests::failing::failing_one stdout ----
+            thread 'tests::failing::failing_one' panicked at 'this is a failing test', src/tests/failing.rs:4:5
+        note: Run with `RUST_BACKTRACE=1` for a backtrace.
+
+        ---- tests::failing::failing_two stdout ----
+            thread 'tests::failing::failing_two' panicked at 'this is a failing test', src/tests/failing.rs:9:5
+
+        until we find another failures: line
+    */
+    pub fn find_error_details_lines(input : &Vec<String>) -> Vec<String> {
+        let mut results: Vec<String> = Vec::new();
+        let mut found_section: bool = false;
+
+        for line in input {
+            let left: String = line.trimmed().from_left(9);
+
+            if "failures:" == left {
+                if false == found_section {
+                    found_section = true;
+                } else {
+                    found_section = false;
+                }
+                continue;
+            }
+
+            if true == found_section {
+                results.push(line.to_string());
+            }
+
         }
 
         return  results;
@@ -94,6 +141,23 @@ mod process_for_individual_test_results_tests {
         let result_vec: Vec<String> = ProcessIndividualTestResults::find_test_lines(&empty_vec);
 
         assert_eq!(result_vec.len(), empty_vec.len());
+    }
+
+    #[test]
+    fn small_failures_section_success(){
+        let mut lines: Vec<String> = Vec::new();
+        lines.push(str2string!("        failures:"));
+        lines.push(str2string!("---- tests::failing::failing_one stdout ----"));
+        lines.push(str2string!("thread 'tests::failing::failing_one' panicked at 'this is a failing test', src/tests/failing.rs:4:5"));
+        lines.push(str2string!("note: Run with `RUST_BACKTRACE=1` for a backtrace."));
+        lines.push(str2string!("---- tests::failing::failing_two stdout ----"));
+        lines.push(str2string!("thread 'tests::failing::failing_two' panicked at 'this is a failing test', src/tests/failing.rs:9:5"));
+        lines.push(str2string!("        failures:"));
+
+        let results: Vec<String> = ProcessIndividualTestResults::find_error_details_lines(&lines);
+
+        println!("results are => {:?}", results);
+        assert!(5 == results.len());
     }
 
 }

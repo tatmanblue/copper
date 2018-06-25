@@ -5,6 +5,7 @@
 pub trait StringUtils {
     fn from_right(&self, count : usize) -> String;
     fn from_left(&self, count: usize) -> String;
+    fn trimmed(&self) -> String;
 }
 
 /// this impl adds StringUtils to any string
@@ -35,6 +36,10 @@ impl StringUtils for String {
         let left_most: String = self.chars().take(count).collect::<String>();
 
         return left_most.to_owned();
+    }
+
+    fn trimmed(&self) -> String {
+        return self.to_string().trim().to_string();
     }
 }
 
@@ -87,5 +92,50 @@ mod string_utils_tests {
         let left: String = test.from_left(1);
 
         assert_eq!(left, "1".to_string());
+    }
+
+    #[test]
+    fn trimmed_when_string_is_empty() {
+        let test: String = "".to_string();
+
+        let left: String = test.trimmed();
+
+        assert_eq!(left, test);
+    }
+
+    #[test]
+    fn trimmed_when_theres_no_spaces() {
+        let test: String = "blah blah blah".to_string();
+
+        let left: String = test.trimmed();
+
+        assert_eq!(left, test);
+    }
+
+    #[test]
+    fn trimmed_when_spaces_at_right() {
+        let test: String = "blah blah blah  ".to_string();
+
+        let left: String = test.trimmed();
+
+        assert_eq!(left, "blah blah blah".to_string());
+    }
+
+    #[test]
+    fn trimmed_when_spaces_at_left() {
+        let test: String = "     blah blah blah".to_string();
+
+        let left: String = test.trimmed();
+
+        assert_eq!(left, "blah blah blah".to_string());
+    }
+
+    #[test]
+    fn trimmed_when_spaces_at_both() {
+        let test: String = "     blah blah blah    ".to_string();
+
+        let left: String = test.trimmed();
+
+        assert_eq!(left, "blah blah blah".to_string());
     }
 }

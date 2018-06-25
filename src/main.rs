@@ -17,12 +17,14 @@ extern crate tera;
 #[macro_use] extern crate log;
 #[macro_use] extern crate serde_derive;
 
+#[macro_use] pub mod utils;
+
 pub mod input;
 pub mod output;
 pub mod processors;
 pub mod shell;
 pub mod tests;
-pub mod utils;
+
 
 use std::env;
 use std::sync::{Once, ONCE_INIT};
@@ -41,17 +43,6 @@ use shell::shell_trait::ShellTrait;
 use utils::environment::Environment;
 use utils::logger::init_log;
 
-
-fn print_help() {
-    println!();
-    println!("{}", Color::Green.paint("rust-test-parser"));
-    println!("\t by me");
-    println!();
-    println!("usage is pretty simple, assuming rust-test-parser is in your path. call it like this,");
-    println!("in the same directory you ran {}:", Color::White.paint("cargo build"));
-    println!("{}", Color::Blue.paint("\tcargo test | rust-test-parser"));
-    println!();
-}
 
 fn main() {
     init_log();
