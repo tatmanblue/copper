@@ -20,7 +20,7 @@
     <!-- Skipped test results -->
     {% if who_freaking_knows |length > 0 %}
     <div class="panel-group">
-      <div class="panel panel-default">
+      <div class="panel panel-warning">
         <div class="panel-heading">
           <h4 class="panel-title">
             <a data-toggle="collapse" href="#skipped_group_collapse">{{ who_freaking_knows | length }} skipped tests </a>
@@ -40,7 +40,7 @@
     <!-- Successful test results -->
     {% if successful_tests |length > 0 %}
     <div class="panel-group">
-      <div class="panel panel-default">
+      <div class="panel panel-success">
         <div class="panel-heading">
           <h4 class="panel-title">
             <a data-toggle="collapse" href="#success_group_collapse">{{ successful_tests | length }} successful tests </a>
