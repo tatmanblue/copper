@@ -11,6 +11,11 @@ use ansi_term::*;
 */
 pub struct Environment {
     /**
+        directory where rust-test-parser is invoked from
+        aka . fully qualified
+    */
+    pub working_dir: String,
+    /**
         expectation is this will be $HOME/.rust-test-parser/templates
     */
     pub template_dir : String,
@@ -40,6 +45,10 @@ impl Environment {
         println!();
     }
 
+    fn get_env_working_dir() -> String {
+        return env::current_dir().unwrap().to_str().unwrap().to_string();
+    }
+
     fn get_working_dir() -> String {
         match env::current_dir() {
             Ok(path) => return path.to_str().unwrap().to_string(),
@@ -63,11 +72,13 @@ impl Environment {
     */
     pub fn new() -> Environment {
 
+        let working_dir: String = Environment::get_env_working_dir();
         let home_dir : String = Environment::get_home_dir();
         let template_dir : String = format!("{}{}", home_dir, "/templates");
         let results_dir : String = format!("{}{}", home_dir, "/results");
 
         return Environment {
+            working_dir,
             template_dir,
             results_dir,
             output_format: "default".to_string(),

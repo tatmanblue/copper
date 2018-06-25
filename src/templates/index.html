@@ -14,21 +14,24 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h4>{{ title|title }}</h4>
+<div class="jumbotron text-center">
+    <h4>{{ title | title }}</h4>
+    <h5>{{ from_location }}</h5>
+</div>
 <div class="container">
 
     <!-- Skipped test results -->
-    {% if who_freaking_knows |length > 0 %}
+    {% if ignored_tests |length > 0 %}
     <div class="panel-group">
       <div class="panel panel-warning">
         <div class="panel-heading">
           <h4 class="panel-title">
-            <a data-toggle="collapse" href="#skipped_group_collapse">{{ who_freaking_knows | length }} skipped tests </a>
+            <a data-toggle="collapse" href="#skipped_group_collapse">{{ ignored_tests | length }} skipped tests </a>
           </h4>
         </div>
         <div id="skipped_group_collapse" class="panel-collapse collapse">
           <div class="panel-body">
-                {% for test in who_freaking_knows %}
+                {% for test in ignored_tests %}
                     <div>{{ test.name }}</div>
                 {% endfor %}
           </div>

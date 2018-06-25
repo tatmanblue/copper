@@ -38,9 +38,10 @@ impl OutputTrait for HtmlOutput {
 
 
         context.add("title", &"test results");
+        context.add("from_location", &env.working_dir);
 
         trace!("skipped test count {}", test_results.skipped.len());
-        context.add("who_freaking_knows",&test_results.skipped);
+        context.add("ignored_tests",&test_results.skipped);
 
         trace!("success test count {}", test_results.success.len());
         context.add("successful_tests",&test_results.success);
