@@ -1,0 +1,615 @@
+.
+├── Cargo.lock
+├── Cargo.toml
+├── README.md
+├── deploy.sh
+├── results.txt
+├── src
+│   ├── input
+│   │   ├── from_stdin.rs
+│   │   ├── input_trait.rs
+│   │   └── mod.rs
+│   ├── main.rs
+│   ├── output
+│   │   ├── console.rs
+│   │   ├── factory.rs
+│   │   ├── html_generator.rs
+│   │   ├── mod.rs
+│   │   └── output_trait.rs
+│   ├── processors
+│   │   ├── individual_test_results.rs
+│   │   ├── mod.rs
+│   │   ├── process_for_individual_test_results.rs
+│   │   ├── test_set.rs
+│   │   └── types.rs
+│   ├── shell
+│   │   ├── browser.rs
+│   │   ├── console.rs
+│   │   ├── factory.rs
+│   │   ├── mod.rs
+│   │   └── shell_trait.rs
+│   ├── templates
+│   │   └── index.html
+│   ├── tests
+│   │   ├── doc_tests.rs
+│   │   ├── failing.rs
+│   │   ├── mod.rs
+│   │   └── passing.rs
+│   └── utils
+│       ├── environment.rs
+│       ├── logger.rs
+│       ├── macros.rs
+│       ├── mod.rs
+│       ├── random.rs
+│       └── string_utils.rs
+├── target
+│   └── debug
+│       ├── build
+│       │   ├── num-integer-1a30dd3e447aa21e
+│       │   │   ├── out
+│       │   │   ├── output
+│       │   │   ├── root-output
+│       │   │   └── stderr
+│       │   ├── num-integer-cfe823cb31e5e062
+│       │   │   ├── build-script-build
+│       │   │   ├── build_script_build-cfe823cb31e5e062
+│       │   │   ├── build_script_build-cfe823cb31e5e062.d
+│       │   │   └── build_script_build-cfe823cb31e5e062.dSYM
+│       │   │       └── Contents
+│       │   │           ├── Info.plist
+│       │   │           └── Resources
+│       │   │               └── DWARF
+│       │   │                   └── build_script_build-cfe823cb31e5e062
+│       │   ├── num-traits-2d52353625948603
+│       │   │   ├── out
+│       │   │   ├── output
+│       │   │   ├── root-output
+│       │   │   └── stderr
+│       │   ├── num-traits-791bff09446d9151
+│       │   │   ├── build-script-build
+│       │   │   ├── build_script_build-791bff09446d9151
+│       │   │   ├── build_script_build-791bff09446d9151.d
+│       │   │   └── build_script_build-791bff09446d9151.dSYM
+│       │   │       └── Contents
+│       │   │           ├── Info.plist
+│       │   │           └── Resources
+│       │   │               └── DWARF
+│       │   │                   └── build_script_build-791bff09446d9151
+│       │   ├── regex-30db2ed5573c4a50
+│       │   │   ├── out
+│       │   │   ├── output
+│       │   │   ├── root-output
+│       │   │   └── stderr
+│       │   ├── regex-4e36226597a32f22
+│       │   │   ├── build-script-build
+│       │   │   ├── build_script_build-4e36226597a32f22
+│       │   │   ├── build_script_build-4e36226597a32f22.d
+│       │   │   └── build_script_build-4e36226597a32f22.dSYM
+│       │   │       └── Contents
+│       │   │           ├── Info.plist
+│       │   │           └── Resources
+│       │   │               └── DWARF
+│       │   │                   └── build_script_build-4e36226597a32f22
+│       │   ├── regex-c7b4200ba9a1cd7b
+│       │   │   ├── out
+│       │   │   ├── output
+│       │   │   ├── root-output
+│       │   │   └── stderr
+│       │   ├── regex-e671555079ae5afb
+│       │   │   ├── build-script-build
+│       │   │   ├── build_script_build-e671555079ae5afb
+│       │   │   ├── build_script_build-e671555079ae5afb.d
+│       │   │   └── build_script_build-e671555079ae5afb.dSYM
+│       │   │       └── Contents
+│       │   │           ├── Info.plist
+│       │   │           └── Resources
+│       │   │               └── DWARF
+│       │   │                   └── build_script_build-e671555079ae5afb
+│       │   ├── serde-b8745cfe58c12491
+│       │   │   ├── out
+│       │   │   ├── output
+│       │   │   ├── root-output
+│       │   │   └── stderr
+│       │   └── serde-efafeda2a521b185
+│       │       ├── build-script-build
+│       │       ├── build_script_build-efafeda2a521b185
+│       │       ├── build_script_build-efafeda2a521b185.d
+│       │       └── build_script_build-efafeda2a521b185.dSYM
+│       │           └── Contents
+│       │               ├── Info.plist
+│       │               └── Resources
+│       │                   └── DWARF
+│       │                       └── build_script_build-efafeda2a521b185
+│       ├── deps
+│       │   ├── aho_corasick-26a0fc60efeae7c9.d
+│       │   ├── ansi_term-12a313eae99427c0.d
+│       │   ├── app_dirs-e5a04b986fb7d892.d
+│       │   ├── atty-b7603ecd6c18da3c.d
+│       │   ├── backtrace-59859c85e6a377a4.d
+│       │   ├── cfg_if-b6d62d7d8178db38.d
+│       │   ├── chrono-f1ac01c648a3ce0a.d
+│       │   ├── dtoa-8cb5e636a12b7220.d
+│       │   ├── env_logger-3c66b3c7d793f6c1.d
+│       │   ├── error_chain-acb3c7f3e7ad29bb.d
+│       │   ├── failing_integration_tests-b843c504a3e5fece
+│       │   ├── failing_integration_tests-b843c504a3e5fece.d
+│       │   ├── failing_integration_tests-b843c504a3e5fece.dSYM
+│       │   │   └── Contents
+│       │   │       ├── Info.plist
+│       │   │       └── Resources
+│       │   │           └── DWARF
+│       │   │               └── failing_integration_tests-b843c504a3e5fece
+│       │   ├── glob-ef199187ed4c4278.d
+│       │   ├── humansize-23fcfa0cdbe5e61b.d
+│       │   ├── humantime-0b1c4fadbd823b12.d
+│       │   ├── idna-b94af3154f312fdb.d
+│       │   ├── ignored_integration_tests-c20beec58e44f1a5
+│       │   ├── ignored_integration_tests-c20beec58e44f1a5.d
+│       │   ├── ignored_integration_tests-c20beec58e44f1a5.dSYM
+│       │   │   └── Contents
+│       │   │       ├── Info.plist
+│       │   │       └── Resources
+│       │   │           └── DWARF
+│       │   │               └── ignored_integration_tests-c20beec58e44f1a5
+│       │   ├── itoa-e3e81958217bc31d.d
+│       │   ├── itoa-e7ffe849929ec8aa.d
+│       │   ├── lazy_static-28f51324bedf9eb4.d
+│       │   ├── lazy_static-e5c34582803f4dea.d
+│       │   ├── libaho_corasick-26a0fc60efeae7c9.rlib
+│       │   ├── libansi_term-12a313eae99427c0.rlib
+│       │   ├── libapp_dirs-e5a04b986fb7d892.rlib
+│       │   ├── libatty-b7603ecd6c18da3c.rlib
+│       │   ├── libbacktrace-59859c85e6a377a4.rlib
+│       │   ├── libc-3fd7115679266930.d
+│       │   ├── libcfg_if-b6d62d7d8178db38.rlib
+│       │   ├── libchrono-f1ac01c648a3ce0a.rlib
+│       │   ├── libdtoa-8cb5e636a12b7220.rlib
+│       │   ├── libenv_logger-3c66b3c7d793f6c1.rlib
+│       │   ├── liberror_chain-acb3c7f3e7ad29bb.rlib
+│       │   ├── libglob-ef199187ed4c4278.rlib
+│       │   ├── libhumansize-23fcfa0cdbe5e61b.rlib
+│       │   ├── libhumantime-0b1c4fadbd823b12.rlib
+│       │   ├── libidna-b94af3154f312fdb.rlib
+│       │   ├── libitoa-e3e81958217bc31d.rlib
+│       │   ├── libitoa-e7ffe849929ec8aa.rlib
+│       │   ├── liblazy_static-28f51324bedf9eb4.rlib
+│       │   ├── liblazy_static-e5c34582803f4dea.rlib
+│       │   ├── liblibc-3fd7115679266930.rlib
+│       │   ├── liblog-1f51da652b561003.rlib
+│       │   ├── libmatches-1a01f0510fce2fb1.rlib
+│       │   ├── libmemchr-b862f686ed347616.rlib
+│       │   ├── libnum_integer-76a9c9be2998a05d.rlib
+│       │   ├── libnum_traits-2669ea0ccf04bba4.rlib
+│       │   ├── libnum_traits-32ec612555dd28a5.rlib
+│       │   ├── libopen-8029426ea8d4f652.rlib
+│       │   ├── libpercent_encoding-b5c7ffbf28db0891.rlib
+│       │   ├── libpest-aa977d8243d42aff.rlib
+│       │   ├── libpest_derive-ea36bfc0baaff78a.dylib
+│       │   ├── libpest_derive-ea36bfc0baaff78a.dylib.dSYM
+│       │   │   └── Contents
+│       │   │       ├── Info.plist
+│       │   │       └── Resources
+│       │   │           └── DWARF
+│       │   │               └── libpest_derive-ea36bfc0baaff78a.dylib
+│       │   ├── libpreferences-4d26af891a9ac3f1.rlib
+│       │   ├── libproc_macro2-82dc125b2c475906.rlib
+│       │   ├── libquick_error-851d4ffd9f1d103e.rlib
+│       │   ├── libquote-448825020f5ff6b0.rlib
+│       │   ├── libquote-7a4248947bea17ca.rlib
+│       │   ├── librand-49eb536337335c23.rlib
+│       │   ├── libregex-420c76a3b863da0f.rlib
+│       │   ├── libregex-fe277e9739d615af.rlib
+│       │   ├── libregex_syntax-7e9a8d3a675a23b5.rlib
+│       │   ├── libregex_syntax-fb3d65d3d5c2196b.rlib
+│       │   ├── librustc_demangle-9dc8f8b91a249dcd.rlib
+│       │   ├── libserde-71a7874e9cb18eea.rlib
+│       │   ├── libserde-a9ccf03bd5fb6cd5.rlib
+│       │   ├── libserde_derive-58a49f8be6f2f4b5.dylib
+│       │   ├── libserde_derive-58a49f8be6f2f4b5.dylib.dSYM
+│       │   │   └── Contents
+│       │   │       ├── Info.plist
+│       │   │       └── Resources
+│       │   │           └── DWARF
+│       │   │               └── libserde_derive-58a49f8be6f2f4b5.dylib
+│       │   ├── libserde_json-269cc87620e061b1.rlib
+│       │   ├── libserde_json-c450b7562a62fc24.rlib
+│       │   ├── libslug-9e8d263d8eb8df80.rlib
+│       │   ├── libsyn-20d520ca310b3cb5.rlib
+│       │   ├── libsyn-c5699df4805981d0.rlib
+│       │   ├── libsynom-e98e8584724a83cc.rlib
+│       │   ├── libtera-b26c3e7e5eebc8c5.rlib
+│       │   ├── libtermcolor-c81ba11bde0f3622.rlib
+│       │   ├── libthread_local-f403481adfe7962d.rlib
+│       │   ├── libtime-e5948bc4ce1e17af.rlib
+│       │   ├── libucd_util-55eac44d1f06ccfa.rlib
+│       │   ├── libunicode_bidi-c7bfa03f10b74149.rlib
+│       │   ├── libunicode_normalization-9d24b93bde19f6db.rlib
+│       │   ├── libunicode_xid-58b225dd4c035193.rlib
+│       │   ├── libunicode_xid-8e92fe86de5bd53f.rlib
+│       │   ├── libunidecode-e646ac5ddd8968e9.rlib
+│       │   ├── libunreachable-0cf351d6e261f452.rlib
+│       │   ├── liburl-bacba26472140edb.rlib
+│       │   ├── libutf8_ranges-368311450f11998f.rlib
+│       │   ├── libvoid-da9cfe00025da487.rlib
+│       │   ├── log-1f51da652b561003.d
+│       │   ├── matches-1a01f0510fce2fb1.d
+│       │   ├── memchr-b862f686ed347616.d
+│       │   ├── num_integer-76a9c9be2998a05d.d
+│       │   ├── num_traits-2669ea0ccf04bba4.d
+│       │   ├── num_traits-32ec612555dd28a5.d
+│       │   ├── open-8029426ea8d4f652.d
+│       │   ├── passing_integration_tests-d999e0fe69e49f57
+│       │   ├── passing_integration_tests-d999e0fe69e49f57.d
+│       │   ├── passing_integration_tests-d999e0fe69e49f57.dSYM
+│       │   │   └── Contents
+│       │   │       ├── Info.plist
+│       │   │       └── Resources
+│       │   │           └── DWARF
+│       │   │               └── passing_integration_tests-d999e0fe69e49f57
+│       │   ├── percent_encoding-b5c7ffbf28db0891.d
+│       │   ├── pest-aa977d8243d42aff.d
+│       │   ├── pest_derive-ea36bfc0baaff78a.d
+│       │   ├── preferences-4d26af891a9ac3f1.d
+│       │   ├── proc_macro2-82dc125b2c475906.d
+│       │   ├── quick_error-851d4ffd9f1d103e.d
+│       │   ├── quote-448825020f5ff6b0.d
+│       │   ├── quote-7a4248947bea17ca.d
+│       │   ├── rand-49eb536337335c23.d
+│       │   ├── regex-420c76a3b863da0f.d
+│       │   ├── regex-fe277e9739d615af.d
+│       │   ├── regex_syntax-7e9a8d3a675a23b5.d
+│       │   ├── regex_syntax-fb3d65d3d5c2196b.d
+│       │   ├── rust_test_parser-9ef794bf7bc7ee65
+│       │   ├── rust_test_parser-9ef794bf7bc7ee65.d
+│       │   ├── rust_test_parser-9ef794bf7bc7ee65.dSYM
+│       │   │   └── Contents
+│       │   │       ├── Info.plist
+│       │   │       └── Resources
+│       │   │           └── DWARF
+│       │   │               └── rust_test_parser-9ef794bf7bc7ee65
+│       │   ├── rust_test_parser-a146545f84e48dc1
+│       │   ├── rust_test_parser-a146545f84e48dc1.d
+│       │   ├── rust_test_parser-a146545f84e48dc1.dSYM
+│       │   │   └── Contents
+│       │   │       ├── Info.plist
+│       │   │       └── Resources
+│       │   │           └── DWARF
+│       │   │               └── rust_test_parser-a146545f84e48dc1
+│       │   ├── rustc_demangle-9dc8f8b91a249dcd.d
+│       │   ├── serde-71a7874e9cb18eea.d
+│       │   ├── serde-a9ccf03bd5fb6cd5.d
+│       │   ├── serde_derive-58a49f8be6f2f4b5.d
+│       │   ├── serde_json-269cc87620e061b1.d
+│       │   ├── serde_json-c450b7562a62fc24.d
+│       │   ├── slug-9e8d263d8eb8df80.d
+│       │   ├── syn-20d520ca310b3cb5.d
+│       │   ├── syn-c5699df4805981d0.d
+│       │   ├── synom-e98e8584724a83cc.d
+│       │   ├── tera-b26c3e7e5eebc8c5.d
+│       │   ├── termcolor-c81ba11bde0f3622.d
+│       │   ├── thread_local-f403481adfe7962d.d
+│       │   ├── time-e5948bc4ce1e17af.d
+│       │   ├── ucd_util-55eac44d1f06ccfa.d
+│       │   ├── unicode_bidi-c7bfa03f10b74149.d
+│       │   ├── unicode_normalization-9d24b93bde19f6db.d
+│       │   ├── unicode_xid-58b225dd4c035193.d
+│       │   ├── unicode_xid-8e92fe86de5bd53f.d
+│       │   ├── unidecode-e646ac5ddd8968e9.d
+│       │   ├── unreachable-0cf351d6e261f452.d
+│       │   ├── url-bacba26472140edb.d
+│       │   ├── utf8_ranges-368311450f11998f.d
+│       │   └── void-da9cfe00025da487.d
+│       ├── examples
+│       ├── failing_integration_tests-b843c504a3e5fece
+│       ├── failing_integration_tests-b843c504a3e5fece.d
+│       ├── ignored_integration_tests-c20beec58e44f1a5
+│       ├── ignored_integration_tests-c20beec58e44f1a5.d
+│       ├── incremental
+│       │   ├── failing_integration_tests-1mc3l1cxyn993
+│       │   │   ├── s-f2ckb576dq-1qnqyat-263fg2vutk8pp
+│       │   │   │   ├── 16u6js6g0l3k1ic6.o
+│       │   │   │   ├── 1y16o1qfye96o7m0.o
+│       │   │   │   ├── 1zeawhkbeobww1zn.o
+│       │   │   │   ├── 3171x0bwu82dptu7.o
+│       │   │   │   ├── 3b400867kxzmfxa6.o
+│       │   │   │   ├── 3cx7oljifvb206q7.o
+│       │   │   │   ├── 3rngp6bm2u2q5z0y.o
+│       │   │   │   ├── 45nf4z58qqykpcpi.o
+│       │   │   │   ├── 4yh8x2b62dcih00t.o
+│       │   │   │   ├── 51c9iqc7mok0ysyt.o
+│       │   │   │   ├── 9elsx31vb4it187.o
+│       │   │   │   ├── dep-graph.bin
+│       │   │   │   ├── kt25z0521ngsjub.o
+│       │   │   │   ├── query-cache.bin
+│       │   │   │   └── work-products.bin
+│       │   │   └── s-f2ckb576dq-1qnqyat.lock
+│       │   ├── ignored_integration_tests-3d9ks7c2r7lo9
+│       │   │   ├── s-f2ckb576ca-1n3sz8m-397c0h4lkrupa
+│       │   │   │   ├── 16u6js6g0l3k1ic6.o
+│       │   │   │   ├── 1y16o1qfye96o7m0.o
+│       │   │   │   ├── 1zeawhkbeobww1zn.o
+│       │   │   │   ├── 23ikljxlg072fxx5.o
+│       │   │   │   ├── 25r6roh0gz910f04.o
+│       │   │   │   ├── 3171x0bwu82dptu7.o
+│       │   │   │   ├── 3cx7oljifvb206q7.o
+│       │   │   │   ├── 3rngp6bm2u2q5z0y.o
+│       │   │   │   ├── 45nf4z58qqykpcpi.o
+│       │   │   │   ├── 4yh8x2b62dcih00t.o
+│       │   │   │   ├── 9elsx31vb4it187.o
+│       │   │   │   ├── dep-graph.bin
+│       │   │   │   ├── kt25z0521ngsjub.o
+│       │   │   │   ├── query-cache.bin
+│       │   │   │   └── work-products.bin
+│       │   │   └── s-f2ckb576ca-1n3sz8m.lock
+│       │   ├── passing_integration_tests-2okb0ao2qoavg
+│       │   │   ├── s-f2ckb576ee-48qc25-1ofp4uujuncgp
+│       │   │   │   ├── 12e85fpo8tojtv.o
+│       │   │   │   ├── 16u6js6g0l3k1ic6.o
+│       │   │   │   ├── 1y16o1qfye96o7m0.o
+│       │   │   │   ├── 1zeawhkbeobww1zn.o
+│       │   │   │   ├── 20mc1bwoj6ntvvsh.o
+│       │   │   │   ├── 3171x0bwu82dptu7.o
+│       │   │   │   ├── 3cx7oljifvb206q7.o
+│       │   │   │   ├── 3rngp6bm2u2q5z0y.o
+│       │   │   │   ├── 45nf4z58qqykpcpi.o
+│       │   │   │   ├── 4yh8x2b62dcih00t.o
+│       │   │   │   ├── 9elsx31vb4it187.o
+│       │   │   │   ├── dep-graph.bin
+│       │   │   │   ├── kt25z0521ngsjub.o
+│       │   │   │   ├── query-cache.bin
+│       │   │   │   └── work-products.bin
+│       │   │   └── s-f2ckb576ee-48qc25.lock
+│       │   ├── rust_test_parser-1t5d2dwomcg1d
+│       │   │   ├── s-f2cqarm5az-18qg7ss-3t1z1tdfzvvma
+│       │   │   │   ├── 12f5ifttr58vfevz.o
+│       │   │   │   ├── 16u6js6g0l3k1ic6.o
+│       │   │   │   ├── 1dqvxks6k2bzkxe.o
+│       │   │   │   ├── 1im38lueib99jsk0.o
+│       │   │   │   ├── 1jnlhyxj59jycbjv.o
+│       │   │   │   ├── 1mvmz58owquyropc.o
+│       │   │   │   ├── 1o6b1la7g4jnv39b.o
+│       │   │   │   ├── 1q8ffos2d96smbjs.o
+│       │   │   │   ├── 1ss29n16lb9loz6h.o
+│       │   │   │   ├── 1vut2eft6nlujjxr.o
+│       │   │   │   ├── 1y16o1qfye96o7m0.o
+│       │   │   │   ├── 1yh1hag25uihdei0.o
+│       │   │   │   ├── 1zeawhkbeobww1zn.o
+│       │   │   │   ├── 1zwd8n7bcl3vhvvh.o
+│       │   │   │   ├── 236iz806sghm3wx.o
+│       │   │   │   ├── 23tqyymcb18u96mb.o
+│       │   │   │   ├── 27tdad292ho0ivy5.o
+│       │   │   │   ├── 29wsue3sb7ow0yt4.o
+│       │   │   │   ├── 2eiy4jpm5uanztjf.o
+│       │   │   │   ├── 2f0hry2t7c05ttdi.o
+│       │   │   │   ├── 2idik0aos3pqd4yt.o
+│       │   │   │   ├── 2jqywn86b2gsqohu.o
+│       │   │   │   ├── 2kjrmm4fe2aha78f.o
+│       │   │   │   ├── 2lyh15q6cjwzy18c.o
+│       │   │   │   ├── 2oiwwqohid6mabhc.o
+│       │   │   │   ├── 2q6n6r9qq9mutb3y.o
+│       │   │   │   ├── 2qhkzqx5zqexj20y.o
+│       │   │   │   ├── 2vafkhiz77emxquo.o
+│       │   │   │   ├── 2z7ffi9qqeig53uz.o
+│       │   │   │   ├── 3171x0bwu82dptu7.o
+│       │   │   │   ├── 34b5dnj6md7xu621.o
+│       │   │   │   ├── 3ayaeypdcro9d6yk.o
+│       │   │   │   ├── 3cx7oljifvb206q7.o
+│       │   │   │   ├── 3g94tobrpgum5dk6.o
+│       │   │   │   ├── 3ik0x0hz6l66cx38.o
+│       │   │   │   ├── 3ka2sadpn7sl5c8b.o
+│       │   │   │   ├── 3kfx4ynvkmi2y9i5.o
+│       │   │   │   ├── 3ldk0i2zxftngav8.o
+│       │   │   │   ├── 3oqznv5oym7l3m4e.o
+│       │   │   │   ├── 3pc7okylv2z04amd.o
+│       │   │   │   ├── 3rngp6bm2u2q5z0y.o
+│       │   │   │   ├── 3rz1p8sm1aqcbz7t.o
+│       │   │   │   ├── 3s4buvlpx1bhrtjz.o
+│       │   │   │   ├── 3vck0z67htzlxjio.o
+│       │   │   │   ├── 3xmexsib0h1770dr.o
+│       │   │   │   ├── 436dotimmrgzkwfa.o
+│       │   │   │   ├── 43v6g0y2xsxoggnt.o
+│       │   │   │   ├── 45nf4z58qqykpcpi.o
+│       │   │   │   ├── 45pc7c65foh9i35f.o
+│       │   │   │   ├── 47kb80rpg37n2ote.o
+│       │   │   │   ├── 48721dc4k5qxei0u.o
+│       │   │   │   ├── 48gbz4eby1mc75v2.o
+│       │   │   │   ├── 49a7n47po4ttqjl7.o
+│       │   │   │   ├── 49lx1q7cxvpykyv0.o
+│       │   │   │   ├── 49qmpuk8w1opmi5q.o
+│       │   │   │   ├── 4b8ptp1vn215jmoe.o
+│       │   │   │   ├── 4bwq2xvs5pwojo6a.o
+│       │   │   │   ├── 4ezmh1vbs95c5ack.o
+│       │   │   │   ├── 4jdnq7xfjeka1bt.o
+│       │   │   │   ├── 4pa9l06ou51cbpxz.o
+│       │   │   │   ├── 4vp4wqj2v29i7mgy.o
+│       │   │   │   ├── 4xq48u46a1pwiqn7.o
+│       │   │   │   ├── 4yh8x2b62dcih00t.o
+│       │   │   │   ├── 4ypvbwho0bu5tnww.o
+│       │   │   │   ├── 504oy93thc0h9aia.o
+│       │   │   │   ├── 51s1w397y42gpez1.o
+│       │   │   │   ├── 54zq6xwdlu4umqga.o
+│       │   │   │   ├── 5544xgl7axh7p8nz.o
+│       │   │   │   ├── 572bgozz9kcwe4zq.o
+│       │   │   │   ├── 57awldhnqlv0g30m.o
+│       │   │   │   ├── 57k06xfugllsc526.o
+│       │   │   │   ├── 5d78689m8uzet3wk.o
+│       │   │   │   ├── 7p53qlves2rwxx0.o
+│       │   │   │   ├── 8xzrsc1ux72v29j.o
+│       │   │   │   ├── 98g0d9x8aw3akpe.o
+│       │   │   │   ├── 9elsx31vb4it187.o
+│       │   │   │   ├── 9fcb3syd3ne5k0n.o
+│       │   │   │   ├── c6lbtaiefvx3wya.o
+│       │   │   │   ├── d6p2df93qm1h3gm.o
+│       │   │   │   ├── dep-graph.bin
+│       │   │   │   ├── e19kx9t7xhzajfl.o
+│       │   │   │   ├── gon14xphovlcp6p.o
+│       │   │   │   ├── kt25z0521ngsjub.o
+│       │   │   │   ├── mz7vgmcf23rofcc.o
+│       │   │   │   ├── osttu3vbqd2x2io.o
+│       │   │   │   ├── pqmjx25qpxkduz7.o
+│       │   │   │   ├── query-cache.bin
+│       │   │   │   ├── sjcqfz2ncn1dupz.o
+│       │   │   │   ├── vp6eucjl0kf57sf.o
+│       │   │   │   └── work-products.bin
+│       │   │   └── s-f2cqarm5az-18qg7ss.lock
+│       │   └── rust_test_parser-m2e4mnxaq7cz
+│       │       ├── s-f2cqarm546-17ry880-33rt7qb7y1fxg
+│       │       │   ├── 12f5ifttr58vfevz.o
+│       │       │   ├── 12oxiu3b7mod6aux.o
+│       │       │   ├── 15kq92zzbmxot4k9.o
+│       │       │   ├── 16u6js6g0l3k1ic6.o
+│       │       │   ├── 17erb31xn70viq4b.o
+│       │       │   ├── 1dqvxks6k2bzkxe.o
+│       │       │   ├── 1im38lueib99jsk0.o
+│       │       │   ├── 1jnlhyxj59jycbjv.o
+│       │       │   ├── 1kduva7sc7em934m.o
+│       │       │   ├── 1mvmz58owquyropc.o
+│       │       │   ├── 1nyfdlp3jd783n7g.o
+│       │       │   ├── 1o6b1la7g4jnv39b.o
+│       │       │   ├── 1pyg38ew8eq184bu.o
+│       │       │   ├── 1q8ffos2d96smbjs.o
+│       │       │   ├── 1rmm85xvb873qftb.o
+│       │       │   ├── 1ss29n16lb9loz6h.o
+│       │       │   ├── 1tjp4sat87ohv0s4.o
+│       │       │   ├── 1vut2eft6nlujjxr.o
+│       │       │   ├── 1x76q9zpug0a9v1p.o
+│       │       │   ├── 1y16o1qfye96o7m0.o
+│       │       │   ├── 1yh1hag25uihdei0.o
+│       │       │   ├── 1zeawhkbeobww1zn.o
+│       │       │   ├── 1zwd8n7bcl3vhvvh.o
+│       │       │   ├── 20k2p1t0yujfjghi.o
+│       │       │   ├── 236iz806sghm3wx.o
+│       │       │   ├── 23tqyymcb18u96mb.o
+│       │       │   ├── 242i5c9zerfj3cpm.o
+│       │       │   ├── 26h09gyc2o6kpsua.o
+│       │       │   ├── 27tdad292ho0ivy5.o
+│       │       │   ├── 29wsue3sb7ow0yt4.o
+│       │       │   ├── 2efhleegh4gztcd2.o
+│       │       │   ├── 2eiy4jpm5uanztjf.o
+│       │       │   ├── 2f0hry2t7c05ttdi.o
+│       │       │   ├── 2fken9eeju7oloq5.o
+│       │       │   ├── 2fu4bur6wpg9awf8.o
+│       │       │   ├── 2gb2i6picgndn8mm.o
+│       │       │   ├── 2h8og2deal0ttn21.o
+│       │       │   ├── 2hmc65z9k2vx8c5e.o
+│       │       │   ├── 2idik0aos3pqd4yt.o
+│       │       │   ├── 2jqywn86b2gsqohu.o
+│       │       │   ├── 2kjrmm4fe2aha78f.o
+│       │       │   ├── 2lyh15q6cjwzy18c.o
+│       │       │   ├── 2oiwwqohid6mabhc.o
+│       │       │   ├── 2oo2s29sg31aujse.o
+│       │       │   ├── 2qhkzqx5zqexj20y.o
+│       │       │   ├── 2se41vanh2hzuicz.o
+│       │       │   ├── 2uly7i8jy3oqnru3.o
+│       │       │   ├── 2vha9r9x1qxuc5rw.o
+│       │       │   ├── 2vno0ju2fa7ssnwo.o
+│       │       │   ├── 2w6xsa2hbi53xhak.o
+│       │       │   ├── 2wixplf1qzszxq14.o
+│       │       │   ├── 2z7ffi9qqeig53uz.o
+│       │       │   ├── 30afs62gg2sq4qeg.o
+│       │       │   ├── 3171x0bwu82dptu7.o
+│       │       │   ├── 3404ijhq5998aa1q.o
+│       │       │   ├── 34b5dnj6md7xu621.o
+│       │       │   ├── 35mpvf94vw6g8ee0.o
+│       │       │   ├── 35s6btrv4is91lrx.o
+│       │       │   ├── 37u231ov5ijo2wik.o
+│       │       │   ├── 38ps4pa181wsnsy9.o
+│       │       │   ├── 39vt9k8jgxmyd1qe.o
+│       │       │   ├── 3ayaeypdcro9d6yk.o
+│       │       │   ├── 3cx7oljifvb206q7.o
+│       │       │   ├── 3g94tobrpgum5dk6.o
+│       │       │   ├── 3hsau77kjznf6v5z.o
+│       │       │   ├── 3ik0x0hz6l66cx38.o
+│       │       │   ├── 3ka2sadpn7sl5c8b.o
+│       │       │   ├── 3kfx4ynvkmi2y9i5.o
+│       │       │   ├── 3ldk0i2zxftngav8.o
+│       │       │   ├── 3oqznv5oym7l3m4e.o
+│       │       │   ├── 3rngp6bm2u2q5z0y.o
+│       │       │   ├── 3sdq3zdetqy0uk12.o
+│       │       │   ├── 3vck0z67htzlxjio.o
+│       │       │   ├── 3xmexsib0h1770dr.o
+│       │       │   ├── 436dotimmrgzkwfa.o
+│       │       │   ├── 43v6g0y2xsxoggnt.o
+│       │       │   ├── 44bsbddupzfao2om.o
+│       │       │   ├── 44fwlp5wvpf2x6hd.o
+│       │       │   ├── 45nf4z58qqykpcpi.o
+│       │       │   ├── 45pc7c65foh9i35f.o
+│       │       │   ├── 47kb80rpg37n2ote.o
+│       │       │   ├── 48721dc4k5qxei0u.o
+│       │       │   ├── 48gbz4eby1mc75v2.o
+│       │       │   ├── 49a7n47po4ttqjl7.o
+│       │       │   ├── 49lx1q7cxvpykyv0.o
+│       │       │   ├── 49qmpuk8w1opmi5q.o
+│       │       │   ├── 4b8ptp1vn215jmoe.o
+│       │       │   ├── 4brwxiorhmgsb6oc.o
+│       │       │   ├── 4bwq2xvs5pwojo6a.o
+│       │       │   ├── 4cuh1vnlot3f7m9v.o
+│       │       │   ├── 4ezmh1vbs95c5ack.o
+│       │       │   ├── 4g47d2sx6m33abop.o
+│       │       │   ├── 4gbgp5a7xd4lch9n.o
+│       │       │   ├── 4if5km58d36urzo2.o
+│       │       │   ├── 4jdnq7xfjeka1bt.o
+│       │       │   ├── 4kgi5h2quqvw167o.o
+│       │       │   ├── 4nwacwiuh77hjw7f.o
+│       │       │   ├── 4ox1516pmc7iufcy.o
+│       │       │   ├── 4pa9l06ou51cbpxz.o
+│       │       │   ├── 4q0noo5fz7fwstxo.o
+│       │       │   ├── 4tcdfqn0uwiwrwub.o
+│       │       │   ├── 4vp4wqj2v29i7mgy.o
+│       │       │   ├── 4xq48u46a1pwiqn7.o
+│       │       │   ├── 4xuhwz5yy6q4gvgg.o
+│       │       │   ├── 4ybye971cqflgun6.o
+│       │       │   ├── 4yh8x2b62dcih00t.o
+│       │       │   ├── 4ypvbwho0bu5tnww.o
+│       │       │   ├── 4yui48scf8durj01.o
+│       │       │   ├── 51s1w397y42gpez1.o
+│       │       │   ├── 54zq6xwdlu4umqga.o
+│       │       │   ├── 5544xgl7axh7p8nz.o
+│       │       │   ├── 572bgozz9kcwe4zq.o
+│       │       │   ├── 57k06xfugllsc526.o
+│       │       │   ├── 5beqqbexwb143v6a.o
+│       │       │   ├── 5cfcd7xn672qs464.o
+│       │       │   ├── 5d78689m8uzet3wk.o
+│       │       │   ├── 5dtvb6c27447ihpu.o
+│       │       │   ├── 5gf6du7k58s78kob.o
+│       │       │   ├── 5ja6ksszgmblgzy.o
+│       │       │   ├── 63mmpc50mjcb0lb.o
+│       │       │   ├── 7p53qlves2rwxx0.o
+│       │       │   ├── 8xzrsc1ux72v29j.o
+│       │       │   ├── 98g0d9x8aw3akpe.o
+│       │       │   ├── 9elsx31vb4it187.o
+│       │       │   ├── 9fcb3syd3ne5k0n.o
+│       │       │   ├── c6lbtaiefvx3wya.o
+│       │       │   ├── d6p2df93qm1h3gm.o
+│       │       │   ├── dep-graph.bin
+│       │       │   ├── e19kx9t7xhzajfl.o
+│       │       │   ├── flypaog9cyk0inx.o
+│       │       │   ├── gon14xphovlcp6p.o
+│       │       │   ├── jtxtkd93cyq9dz.o
+│       │       │   ├── kclyx7of0fal6jf.o
+│       │       │   ├── kt25z0521ngsjub.o
+│       │       │   ├── mb501chi8fnqgmm.o
+│       │       │   ├── mz7vgmcf23rofcc.o
+│       │       │   ├── osttu3vbqd2x2io.o
+│       │       │   ├── pqmjx25qpxkduz7.o
+│       │       │   ├── query-cache.bin
+│       │       │   ├── sjcqfz2ncn1dupz.o
+│       │       │   ├── vp6eucjl0kf57sf.o
+│       │       │   └── work-products.bin
+│       │       └── s-f2cqarm546-17ry880.lock
+│       ├── native
+│       ├── passing_integration_tests-d999e0fe69e49f57
+│       ├── passing_integration_tests-d999e0fe69e49f57.d
+│       ├── rust-test-parser
+│       ├── rust-test-parser.d
+│       ├── rust-test-parser.dSYM -> deps/rust_test_parser-9ef794bf7bc7ee65.dSYM
+│       ├── rust_test_parser-a146545f84e48dc1
+│       ├── rust_test_parser-a146545f84e48dc1.d
+│       └── rust_test_parser-a146545f84e48dc1.dSYM -> deps/rust_test_parser-a146545f84e48dc1.dSYM
+├── tests
+│   ├── failing_integration_tests.rs
+│   ├── ignored_integration_tests.rs
+│   └── passing_integration_tests.rs
+└── tree.txt
+
+91 directories, 521 files
