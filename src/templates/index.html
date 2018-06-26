@@ -67,25 +67,20 @@
             </div>
             <div id="error_group_collapse" class="panel-collapse collapse in">
               <div class="panel-body">
-                    {% for test in failed_tests %}
-                        <div>{{ test.name }}</div>
+                  {% for test in failed_tests %}
+                    <div><a data-toggle="collapse" href="#{{ test.id }}_error_group_collapse">{{ test.name }}</a></div>
 
-                        <!-- details of failed test -->
-                        <div class="panel panel-info">
-                            <!--<div class="panel-heading">
-                                <h5 class="panel-title">
-                                    <a data-toggle="collapse" href="#{{ test.name }}_error_group_collapse">Result: {{ test.result }}</a>
-                                </h5>
-                            </div>-->
-                            <div id="{{ test.name }}_error_group_collapse" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    {% for testline in test.test_details %}
-                                        <div>{{ testline }}</div>
-                                    {% endfor %}
-                                </div>
+                    <!-- details of failed test -->
+                    <div class="panel panel-info">
+                        <div id="{{ test.id }}_error_group_collapse" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                {% for testline in test.test_details %}
+                                    <div>{{ testline }}</div>
+                                {% endfor %}
                             </div>
                         </div>
-                    {% endfor %}
+                    </div>
+                  {% endfor %}
               </div>
             </div>
         </div>

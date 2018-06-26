@@ -57,7 +57,7 @@ impl IndividualTestResults {
 
         unsafe {
             LAST_TEST_ID = LAST_TEST_ID + 1;
-            let id: String = format!("t{}", LAST_TEST_ID);
+            id = format!("t{}", LAST_TEST_ID);
         }
 
         return IndividualTestResults {
@@ -91,5 +91,22 @@ mod individual_test_results_test {
         test_one.append_test_details(&appended_line);
 
         assert_eq!(3, test_one.test_details.len());
+    }
+
+    #[test]
+    fn id_incremented_for_each_new() {
+
+        unsafe {
+            LAST_TEST_ID = 0;
+        }
+
+        let test_one_name: String = str2string!("tests::failing::failing_one");
+        let test_result: String = str2string!("");
+        let test_one: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
+        let test_two: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
+        let test_three: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
+
+        assert_eq!("t3", test_three.id);
+
     }
 }
