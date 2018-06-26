@@ -5,6 +5,8 @@ use std::env;
 
 use ansi_term::*;
 
+use utils::file_utils::FileUtilities;
+
 /**
     Contains, finds and builds any environmental data the user controls for running
     rust-test-parser
@@ -92,6 +94,16 @@ impl Environment {
     pub fn exit_if_print_help() {
         if env::args().find(|a| a == "-h" || a == "--help").is_some() {
             Environment::print_help();
+            exit(0);
+        }
+    }
+
+    pub fn exit_on_clean_up() {
+        if env::args().find(|a| a == "-d" || a == "--delete").is_some() {
+
+            let environment = Environment::new();
+            FileUtilities::clean_up_results(&environment.results_dir).unwrap();
+
             exit(0);
         }
     }

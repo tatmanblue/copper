@@ -50,9 +50,12 @@ fn main() {
     debug!("rust-test-parser has started ...");
 
     Environment::exit_if_print_help();
+    Environment::exit_on_clean_up();
 
     trace!("reading configuration");
     let env:Environment = Environment::new();
+
+    // TODO this method is doing to much.  this code should be separated
 
     trace!("collecting input");
     let all_test_lines: Vec<String> = StdReader::read_all();
