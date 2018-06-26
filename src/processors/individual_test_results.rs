@@ -1,4 +1,5 @@
 //!
+#![allow(unused_assignments)]
 
 use std::cmp::PartialEq;
 use serde::{Deserialize, Serialize};
@@ -96,6 +97,7 @@ mod individual_test_results_test {
     #[test]
     fn id_incremented_for_each_new() {
 
+        // must reset LAST_TEST_ID for the test to succeed
         unsafe {
             LAST_TEST_ID = 0;
         }
