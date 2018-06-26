@@ -153,7 +153,7 @@ impl ProcessIndividualTestResults {
 
             } else {
                 // otherwise we have test data details
-                results.failed.update_results(&test_name, &line);
+                results.failed.update_test_details(&test_name, &line);
             }
         }
     }
@@ -241,10 +241,20 @@ mod process_for_individual_test_results_tests {
 
         ProcessIndividualTestResults::merge_test_errors_into_results(&results, &mut organized_tests);
 
+        let mut found_tests: bool = false;
+
         for test in organized_tests.failed {
-            println!("\ttest {} results {}", test.name, test.result);
+            if test_one_name == test.name {
+                found_tests = true;
+                assert_eq!(2, test.test_details.len());
+            }
+
+            if test_two_name == test.name {
+                found_tests = true;
+                assert_eq!(1, test.test_details.len());
+            }
         }
 
-        assert!(false);
+        assert_eq!(true, found_tests);
     }
 }

@@ -52,4 +52,29 @@ impl IndividualTestResults {
             test_details: Vec::new()
         };
     }
+
+    /**
+    */
+    pub fn append_test_details(&mut self, data : &str) {
+        self.test_details.push(data.to_string());
+    }
+}
+
+#[cfg(test)]
+mod individual_test_results_test {
+    use super::*;
+
+    #[test]
+    fn append_three_lines_to_test_details() {
+        let test_one_name: String = str2string!("tests::failing::failing_one");
+        let test_result: String = str2string!("");
+        let mut test_one: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
+        let appended_line: String = str2string!("line");
+
+        test_one.append_test_details(&appended_line);
+        test_one.append_test_details(&appended_line);
+        test_one.append_test_details(&appended_line);
+
+        assert_eq!(3, test_one.test_details.len());
+    }
 }

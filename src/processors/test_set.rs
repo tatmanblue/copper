@@ -26,9 +26,9 @@ pub trait TestSetFunctions {
     */
     fn index_of(&self, test_name: &String) -> usize;
     /**
-        updates test results for a test
+        updates test details for a test
     */
-    fn update_results(&mut self, test_name: &String, test_results: &String);
+    fn update_test_details(&mut self, test_name: &String, test_results: &String);
 }
 
 impl TestSetFunctions for TestSetCollection {
@@ -57,9 +57,55 @@ impl TestSetFunctions for TestSetCollection {
         panic!(format!("'{}' not found for index_of().", test_name))
     }
 
-    fn update_results(&mut self, test_name: &String, test_results: &String) {
-        trace!("update_results => test_name '{}', test_results '{}'", test_name, test_results);
+    fn update_test_details(&mut self, test_name: &String, test_details: &String) {
+        trace!("update_results => test_name '{}', test_details '{}'", test_name, test_details);
         let test = self.find_by_name(test_name);
-        test.result = format!("{}.  {}", test.result, test_results.to_string());
+        test.append_test_details(&test_details.to_string());
+
+    }
+}
+
+#[cfg(test)]
+mod test_set_tests {
+    use super::*;
+    use processors::individual_test_results::{IndividualTestResults};
+    use utils::logger::init_log;
+
+    #[test]
+    fn find_element_by_name_success() {
+        let test_name: String = str2string!("test_one");
+        let test_result: String = str2string!("FAILED");
+        let mut failed : TestSetCollection = TestSetCollection::new();
+        let test = IndividualTestResults::new(&test_name.to_string(), &test_result);
+
+        failed.push(test);
+
+        let index = failed.index_of(&test_name);
+
+        assert_eq!(0, index);
+    }
+
+    #[test]
+    fn update_test_results_success() {
+
+        init_log();
+
+        let test_name: String = str2string!("test_one");
+        let test_result: String = str2string!("FAILED");
+        let changed_result: String = str2string!("this is the new stuff");
+
+
+        let mut failed : TestSetCollection = TestSetCollection::new();
+        let original_test = IndividualTestResults::new(&test_name.to_string(), &test_result);
+        failed.push(original_test);
+
+        failed.update_test_details(&test_name, &changed_result);
+
+        let updated_test = failed.find_by_name(&test_name.to_string());
+
+        assert_eq!(1, updated_test.test_details.len());
+        assert_eq!(changed_result, updated_test.test_details[0]);
+        assert_eq!(test_result, updated_test.result);
+        assert_eq!(test_name, updated_test.name);
     }
 }
