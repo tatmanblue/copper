@@ -1,17 +1,12 @@
 //! for processing and organizing all lines with expectation they are cargo test output
 
 use ansi_term::Color::*;
+
+use processors::individual_test_results::IndividualTestResults;
+use processors::test_set::{TestSetFunctions, TestSetCollection};
+use processors::types::OrganizedTestResults;
+
 use utils::string_utils::StringUtils;
-
-use processors::types::{IndividualTestResults, OrganizedTestResults, TestSetFunctions, TestSetCollection};
-
-enum LineTypes {
-    UnitTest,
-    IntegrationTest,
-    DocTest,
-    FailedTestDetails,
-    WhoKnows
-}
 
 /**
     Functions for processing an array of strings (assuming from input like stdin) that
@@ -112,7 +107,9 @@ impl ProcessIndividualTestResults {
 
             if "..." == split[2] {
 
-                let test_result: IndividualTestResults = IndividualTestResults::new(&split[1].to_string());
+                let test_name: String = split[1].to_string();
+                let test_result_field: String = split[3].to_string();
+                let test_result: IndividualTestResults = IndividualTestResults::new(&test_name, &test_result_field);
 
                 match test_result.result.as_ref() {
                     "ok" => results.success.push(test_result),
@@ -165,7 +162,9 @@ impl ProcessIndividualTestResults {
 #[cfg(test)]
 mod process_for_individual_test_results_tests {
 
-    use processors::types::{IndividualTestResults, OrganizedTestResults};
+    use processors::individual_test_results::IndividualTestResults;
+    use processors::test_set::{TestSetFunctions, TestSetCollection};
+    use processors::types::OrganizedTestResults;
     use super::ProcessIndividualTestResults;
 
     #[test]
@@ -229,8 +228,11 @@ mod process_for_individual_test_results_tests {
         lines.push(str2string!(" "));
 
         let mut organized_tests: OrganizedTestResults = OrganizedTestResults::new();
-        let test_one: IndividualTestResults = IndividualTestResults{ name: str2string!("tests::failing::failing_one"), result: str2string!("")};
-        let test_two: IndividualTestResults = IndividualTestResults{ name: str2string!("tests::failing::failing_two"), result: str2string!("")};
+        let test_one_name: String = str2string!("tests::failing::failing_one");
+        let test_two_name: String = str2string!("tests::failing::failing_two");
+        let test_result: String = str2string!("");
+        let test_one: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
+        let test_two: IndividualTestResults = IndividualTestResults::new(&test_two_name, &test_result);
 
         organized_tests.failed.push(test_one);
         organized_tests.failed.push(test_two);

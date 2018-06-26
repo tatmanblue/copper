@@ -2,79 +2,17 @@
 
 use std::cmp::PartialEq;
 use serde::{Deserialize, Serialize};
+use processors::individual_test_results::{IndividualTestResults};
+use processors::test_set::{TestSetFunctions, TestSetCollection};
 
-/**
-    a single test result
-*/
-#[derive(Debug, Serialize, Deserialize)]
-pub struct IndividualTestResults {
-    pub name : String,
-    pub result : String
+enum LineTypes {
+    UnitTest,
+    IntegrationTest,
+    DocTest,
+    FailedTestDetails,
+    WhoKnows
 }
 
-impl PartialEq for IndividualTestResults {
-    fn eq(&self, other: &IndividualTestResults) -> bool {
-        return self.name == other.name;
-    }
-
-    fn ne(&self, other: &IndividualTestResults) -> bool {
-        return self.name != other.name;
-    }
-}
-
-impl IndividualTestResults {
-    pub fn new(test_name: &String) -> IndividualTestResults {
-        return IndividualTestResults { name : test_name.to_string(), result : str2string!("")};
-    }
-}
-
-/**
-    Collection of IndividualTestResults
-*/
-pub type TestSetCollection = Vec<IndividualTestResults>;
-
-/**
-    functions for TestSet
-*/
-pub trait TestSetFunctions {
-    fn new() -> TestSetCollection;
-    fn find_by_name(&mut self, test_name : &String) -> &mut IndividualTestResults;
-    fn index_of(&self, test_name: &String) -> usize;
-    fn update_results(&mut self, test_name: &String, test_results: &String);
-}
-
-impl TestSetFunctions for TestSetCollection {
-    fn new() -> TestSetCollection {
-        return Vec::new();
-    }
-
-    fn find_by_name(&mut self, test_name : &String) -> &mut IndividualTestResults {
-        for test in self {
-            if test_name.to_string() == test.name {
-                return test;
-            }
-        }
-
-        panic!(format!("'{}' not found for find_by_name().", test_name))
-    }
-
-    fn index_of(&self, test_name: &String) -> usize {
-
-        for index in 0..self.len() {
-            if test_name.to_string() == self[index].name {
-                return index;
-            }
-        }
-
-        panic!(format!("'{}' not found for index_of().", test_name))
-    }
-
-    fn update_results(&mut self, test_name: &String, test_results: &String) {
-        trace!("update_results => test_name '{}', test_results '{}'", test_name, test_results);
-        let test = self.find_by_name(test_name);
-        test.result = format!("{}.  {}", test.result, test_results.to_string());
-    }
-}
 
 /**
     Grouping of the test results found into three categories
@@ -107,13 +45,16 @@ impl OrganizedTestResults {
 mod types_test {
 
     use super::*;
+    use processors::individual_test_results::{IndividualTestResults};
     use utils::logger::init_log;
 
     #[test]
     fn find_element_by_name_success() {
         let test_name: String = str2string!("test_one");
+        let test_result: String = str2string!("FAILED");
         let mut failed : TestSetCollection = TestSetCollection::new();
-        let test = IndividualTestResults { name : test_name.to_string(), result : str2string!("")};
+        let test = IndividualTestResults::new(&test_name.to_string(), &test_result);
+
         failed.push(test);
 
         let index = failed.index_of(&test_name);
@@ -127,11 +68,12 @@ mod types_test {
         init_log();
 
         let test_name: String = str2string!("test_one");
+        let test_result: String = str2string!("FAILED");
         let changed_result: String = str2string!("this is the new stuff");
 
 
         let mut failed : TestSetCollection = TestSetCollection::new();
-        let original_test : IndividualTestResults = IndividualTestResults { name : test_name.to_string(), result : str2string!("")};
+        let original_test = IndividualTestResults::new(&test_name.to_string(), &test_result);
         failed.push(original_test);
 
         failed.update_results(&test_name, &changed_result);

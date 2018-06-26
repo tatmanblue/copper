@@ -7,7 +7,9 @@ use std::io::Write;
 use tera::{Context, Tera};
 
 use output::output_trait::OutputTrait;
-use processors::types::{OrganizedTestResults, IndividualTestResults};
+use processors::individual_test_results::IndividualTestResults;
+use processors::test_set::{TestSetFunctions, TestSetCollection};
+use processors::types::OrganizedTestResults;
 use shell::factory::{ShellFactory, ShellTypes};
 use utils::environment::Environment;
 use utils::random::rand_string;

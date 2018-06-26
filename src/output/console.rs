@@ -3,7 +3,9 @@
 use ansi_term::Color::*;
 
 use output::output_trait::OutputTrait;
-use processors::types::{OrganizedTestResults, IndividualTestResults};
+use processors::individual_test_results::IndividualTestResults;
+use processors::test_set::{TestSetFunctions, TestSetCollection};
+use processors::types::OrganizedTestResults;
 use shell::factory::{ShellFactory, ShellTypes};
 
 /**
@@ -13,7 +15,7 @@ pub struct ConsoleOutput {
 }
 
 impl ConsoleOutput {
-    fn print_section(name : &str, section: &Vec<IndividualTestResults>) {
+    fn print_section(name : &str, section: &TestSetCollection) {
         println!();
         println!("{} tests: {}", name, section.len());
         for test in section {
