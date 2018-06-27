@@ -1,17 +1,20 @@
 //!
 
+use input::from_file::FileReader;
 use input::from_stdin::StdReader;
 use input::input_trait::InputTrait;
 use utils::environment::Environment;
 
 pub enum InputTypes {
-    StdIn(StdReader)
+    StdIn(StdReader),
+    File(FileReader),
 }
 
 impl InputTrait for InputTypes {
     fn read_all(&self) -> Vec<String> {
         match *self {
-            InputTypes::StdIn(ref reader) => return reader.read_all()
+            InputTypes::StdIn(ref reader) => return reader.read_all(),
+            InputTypes::File(ref reader) => return reader.read_all(),
         }
     }
 }
@@ -30,7 +33,7 @@ impl InputFactory {
 
         match name.as_ref() {
             "stdin" => InputTypes::StdIn(StdReader {} ),
-            "file" => panic!("Error in OutputFactory processing get request"),
+            "file" => InputTypes::File(FileReader { file_name: env.input_file_name.to_string() }),
             _ => {
                 eprintln!("Error in OutputFactory processing get for name of '{}'", name);
                 panic!("Error in OutputFactory processing get request")
