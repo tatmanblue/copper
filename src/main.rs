@@ -25,20 +25,15 @@ pub mod processors;
 pub mod shell;
 pub mod tests;
 
-
-use std::env;
-use std::sync::{Once, ONCE_INIT};
-use std::io::Write;
-
 use ansi_term::*;
 
 use input::input_trait::InputTrait;
-use input::from_stdin::StdReader;
+use input::factory::InputFactory;
 use output::console::ConsoleOutput;
 use output::factory::OutputFactory;
 use output::html_generator::HtmlOutput;
 use output::output_trait::OutputTrait;
-use processors::process_for_individual_test_results::ProcessIndividualTestResults;
+use processors::processing_controller::ProcessingController;
 use shell::shell_trait::ShellTrait;
 use utils::environment::Environment;
 use utils::logger::init_log;
@@ -55,15 +50,10 @@ fn main() {
     trace!("reading configuration");
     let env:Environment = Environment::new();
 
-    // TODO this method is doing to much.  this code should be separated
-
     trace!("collecting input");
-    let all_test_lines: Vec<String> = StdReader::read_all();
-    let summary_lines: Vec<String> = ProcessIndividualTestResults::find_summary_test_lines(&all_test_lines);
-    let error_details: Vec<String> = ProcessIndividualTestResults::find_error_details_lines(&all_test_lines);
-    let mut organized_results = ProcessIndividualTestResults::group_test_results(&summary_lines);
-
-    ProcessIndividualTestResults::merge_test_errors_into_results(&error_details, &mut organized_results);
+    let all_test_lines: Vec<String> = InputFactory::get(&env).read_all();
+    let controller: ProcessingController = ProcessingController::new(all_test_lines);
+    let organized_results = controller.execute();
 
     trace!("generating output");
     if true == env.include_console_format {

@@ -15,7 +15,7 @@ impl InputTrait for StdReader {
         more results.txt | rust_test_parser
         ```
     */
-    fn read_all() -> Vec<String> {
+    fn read_all(&self) -> Vec<String> {
 
         let mut results: Vec<String> = Vec::new();
 

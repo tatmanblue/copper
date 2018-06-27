@@ -104,8 +104,8 @@ mod individual_test_results_test {
 
         let test_one_name: String = str2string!("tests::failing::failing_one");
         let test_result: String = str2string!("");
-        let test_one: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
-        let test_two: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
+        let _test_one: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
+        let _test_two: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
         let test_three: IndividualTestResults = IndividualTestResults::new(&test_one_name, &test_result);
 
         assert_eq!("t3", test_three.id);

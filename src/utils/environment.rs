@@ -6,6 +6,7 @@ use std::env;
 use ansi_term::*;
 
 use utils::file_utils::FileUtilities;
+use utils::string_utils::StringUtils;
 
 /**
     Contains, finds and builds any environmental data the user controls for running
@@ -33,6 +34,12 @@ pub struct Environment {
         default is false.  when true, output also appears in the console
     */
     pub include_console_format: bool,
+    /**
+    */
+    pub read_from_file: bool,
+    /**
+    */
+    pub input_file_name : String,
 }
 
 impl Environment {
@@ -45,6 +52,10 @@ impl Environment {
         println!("in the same directory you ran {}:", Color::White.paint("cargo build"));
         println!("{}", Color::Blue.paint("\tcargo test | rust-test-parser"));
         println!();
+        println!("additional commands include:");
+        println!("    -d, --delete       clean up working folders");
+        println!("    -f, --file <FILE>  get test results from file not stdin");
+        println!("                           eg: rust-test-parser --file bob.txt");
     }
 
     fn get_env_working_dir() -> String {
@@ -78,6 +89,13 @@ impl Environment {
         let home_dir : String = Environment::get_home_dir();
         let template_dir : String = format!("{}{}", home_dir, "/templates");
         let results_dir : String = format!("{}{}", home_dir, "/results");
+        let mut read_from_file: bool = false;
+        let mut input_file_name: String = "".to_string();
+
+        if true ==  Environment::has_file_name_parameter() {
+            read_from_file = true;
+            input_file_name = Environment::get_file_name_parameter();
+        }
 
         return Environment {
             working_dir,
@@ -85,6 +103,8 @@ impl Environment {
             results_dir,
             output_format: "default".to_string(),
             include_console_format: false,
+            read_from_file,
+            input_file_name
         };
     }
 
@@ -98,6 +118,9 @@ impl Environment {
         }
     }
 
+    /**
+        static method, cleans up results folder and exits if -d or --delete is passed on command line
+    */
     pub fn exit_on_clean_up() {
         if env::args().find(|a| a == "-d" || a == "--delete").is_some() {
 
@@ -106,5 +129,40 @@ impl Environment {
 
             exit(0);
         }
+    }
+
+    /**
+        checks if -f/--file is on the command line
+    */
+    pub fn has_file_name_parameter() -> bool {
+        if env::args().find(|a| a == "-f" || a == "--file").is_some() {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+        returns filename when -f/--file is on the command line
+    */
+    pub fn get_file_name_parameter() -> String {
+
+        if env::args().find(|a| a == "-f" || a == "--file").is_some() {
+            let mut found_it : bool = false;
+
+            for argument in env::args() {
+                if true == found_it {
+                    let left : String = argument.from_left(1);
+                    if "-" != left {
+                        return argument;
+                    }
+                }
+
+                if "-f" == argument || "--file" == argument {
+                    found_it = true;
+                }
+            }
+        }
+
+        panic!("expected a file name in command args");
     }
 }
