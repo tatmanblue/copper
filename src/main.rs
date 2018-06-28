@@ -42,7 +42,7 @@ use utils::logger::init_log;
 fn main() {
     init_log();
 
-    debug!("rust-test-parser has started ...");
+    debug!("copper has started ...");
 
     Environment::exit_if_print_help();
     Environment::exit_on_clean_up();

@@ -52,7 +52,7 @@ impl IndividualTestResults {
     /**
         Constructor
     */
-    pub fn new(test_name: &String, test_result: &String) -> IndividualTestResults {
+    pub fn new(test_name: &str, test_result: &str) -> IndividualTestResults {
 
         let mut id: String = str2string!("");
 
