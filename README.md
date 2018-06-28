@@ -2,7 +2,8 @@
 **C**argo Test **O**utput **P**arser.
 
 This application provides a pretty UI to "cargo test" output. 
-[![Build Status](https://travis-ci.org/mattraffel/copper/copper.svg?branch=master)](https://travis-ci.org/mattraffel/copper)
+[![Build Status](https://travis-ci.org/mattraffel/copper.svg?branch=master)](https://travis-ci.org/mattraffel/copper)
+
 
 # Installation
 The following steps are required prior to running:
