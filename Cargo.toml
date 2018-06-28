@@ -3,6 +3,9 @@ name = "copper"
 version = "0.1.0"
 authors = ["matt raffel <matt.raffel@evernym.com>"]
 
+[badges]
+travis-ci = { repository = "https://github.com/mattraffel/copper.git", branch = "master" }
+
 [dependencies]
 ansi_term = "0.11.0"
 env_logger = "0.5.10"

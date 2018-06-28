@@ -38,9 +38,18 @@ impl OutputTrait for HtmlOutput {
         let tera: Tera = Tera::new(&template_search).unwrap();
         let mut context: Context = Context::new();
 
-
         context.add("title", &"test results");
         context.add("from_location", &env.working_dir);
+
+        let mut warning_msg_text : String = str2string!("");
+
+        if 0 == test_results.skipped.len()
+            && 0 == test_results.success.len()
+            && 0 == test_results.failed.len() {
+            warning_msg_text = str2string!("No information was found to create report.");
+        }
+
+        context.add("warning_message", &warning_msg_text);
 
         trace!("skipped test count {}", test_results.skipped.len());
         context.add("ignored_tests",&test_results.skipped);
