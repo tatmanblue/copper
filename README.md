@@ -1,15 +1,19 @@
-# rust-test-output-parser
+# Copper
+**C**argo Test **O**utput **P**arser.
+
 This application provides a pretty UI to "cargo test" output. 
 
 # Installation
 The following steps are required prior to running:
-1) create a directory ".rust-test-parser" in your $HOME folder.
-2) create two subdirectores in ".rust-test-parser": templates, results
-3) copy src/templates into ".rust-test-parser/templates"
+1) create a directory ".copper" in your $HOME folder.
+2) create two subdirectores in ".copper": templates, results
+3) copy src/templates into ".copper/templates"
 4) build project using standard cargo commands
-5) (optional) create a symbolic link to rust-test-parser binary in your path.
+5) (optional) create a symbolic link to copper binary in your path.
 
 
 # Running
-The simplest method is to direct output from "cargo test" to rust-test-parser. eg:
-> (another project dir) cargo test | rust-test-parser
+The simplest method is to direct output from "cargo test" to copper. eg:
+> (another project dir) cargo test | copper
+## Please note: 
+Do not use --no-capture.  The output is different. Copper currently works with output from cargo test only.

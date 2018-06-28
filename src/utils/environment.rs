@@ -1,4 +1,4 @@
-//! Enviroment type is responsible for data that affects the running enviroment of rust-test-parser
+//! Enviroment type is responsible for data that affects the running enviroment of copper
 
 use std::process::exit;
 use std::env;
@@ -10,20 +10,20 @@ use utils::string_utils::StringUtils;
 
 /**
     Contains, finds and builds any environmental data the user controls for running
-    rust-test-parser
+    copper
 */
 pub struct Environment {
     /**
-        directory where rust-test-parser is invoked from
+        directory where copper is invoked from
         aka . fully qualified
     */
     pub working_dir: String,
     /**
-        expectation is this will be $HOME/.rust-test-parser/templates
+        expectation is this will be $HOME/.copper/templates
     */
     pub template_dir : String,
     /**
-        expectation is this will be $HOME/.rust-test-parser/results
+        expectation is this will be $HOME/.copper/results
     */
     pub results_dir : String,
     /**
@@ -45,17 +45,19 @@ pub struct Environment {
 impl Environment {
     fn print_help() {
         println!();
-        println!("{}", Color::Green.paint("rust-test-parser"));
-        println!("\t by me");
+        println!("{}", Color::Green.paint("copper"));
+        println!("\t by matt raffel");
         println!();
-        println!("usage is pretty simple, assuming rust-test-parser is in your path. call it like this,");
+        println!("usage is pretty simple, assuming copper is in your path. call it like this,");
         println!("in the same directory you ran {}:", Color::White.paint("cargo build"));
-        println!("{}", Color::Blue.paint("\tcargo test | rust-test-parser"));
+        println!("{}", Color::Blue.paint("\tcargo test | copper"));
+        println!();
+        println!("Some setup is required.  Please read the READ.ME");
         println!();
         println!("additional commands include:");
         println!("    -d, --delete       clean up working folders");
         println!("    -f, --file <FILE>  get test results from file not stdin");
-        println!("                           eg: rust-test-parser --file bob.txt");
+        println!("                           eg: copper --file bob.txt");
     }
 
     fn get_env_working_dir() -> String {
@@ -70,12 +72,12 @@ impl Environment {
     }
 
     /*
-        should be $HOME/.rust-test-parser
+        should be $HOME/.copper
         if there is an error then current working directory
     */
     fn get_home_dir() -> String {
         match env::home_dir() {
-            Some(path) => return format!("{}{}", path.to_str().unwrap().to_string(), "/.rust-test-parser"),
+            Some(path) => return format!("{}{}", path.to_str().unwrap().to_string(), "/.copper"),
             None => return Environment::get_working_dir(),
         }
     }

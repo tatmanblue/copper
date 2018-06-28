@@ -1,2 +1,3 @@
-cp src/templates/index.html ~/.rust-test-parser/templates/
-rm ~/.rust-test-parser/results/*
+#!/usr/bin/env bash
+cp src/templates/index.html ~/.copper/templates/
+rm ~/.copper/results/*

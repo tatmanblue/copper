@@ -1,5 +1,5 @@
 [package]
-name = "rust-test-parser"
+name = "copper"
 version = "0.1.0"
 authors = ["matt raffel <matt.raffel@evernym.com>"]
 

@@ -12,7 +12,7 @@ impl InputTrait for StdReader {
 
         # Example
         ```ignore
-        more results.txt | rust_test_parser
+        more results.txt | copper
         ```
     */
     fn read_all(&self) -> Vec<String> {
