@@ -23,6 +23,8 @@ impl ProcessingController {
 
         ProcessIndividualTestResults::merge_test_errors_into_results(&error_details, &mut organized_results);
 
+        organized_results.raw_data = self.all_test_lines.to_vec();
+
         return organized_results;
     }
 }

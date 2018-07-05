@@ -42,14 +42,17 @@ impl OutputTrait for HtmlOutput {
         context.add("from_location", &env.working_dir);
 
         let mut warning_msg_text : String = str2string!("");
+        let mut raw_data : Vec<String> = Vec::new();
 
         if 0 == test_results.skipped.len()
             && 0 == test_results.success.len()
             && 0 == test_results.failed.len() {
             warning_msg_text = str2string!("No information was found to create report.");
+            raw_data = test_results.raw_data.to_vec();
         }
 
         context.add("warning_message", &warning_msg_text);
+        context.add("raw_data", &raw_data);
 
         trace!("skipped test count {}", test_results.skipped.len());
         context.add("ignored_tests",&test_results.skipped);
@@ -68,5 +71,14 @@ impl OutputTrait for HtmlOutput {
         f.write_all(rendered.as_bytes()).expect("Unable to write data");
 
         return ShellFactory::get(&"browser" , &html_file);
+    }
+}
+
+#[cfg(test)]
+mod html_generator_tests {
+
+    #[test]
+    fn broken_code() {
+        // hack
     }
 }

@@ -23,6 +23,9 @@
     {% if warning_message | length > 0 %}
     <div class="alert alert-secondary" role="alert">
         {{ warning_message }}
+        {% for data in raw_data %}
+            <div>{{ data }}</div>
+        {% endfor %}
     </div>
     {% endif %}
 

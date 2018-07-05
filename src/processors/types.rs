@@ -25,6 +25,7 @@ pub struct OrganizedTestResults {
     pub success : TestSetCollection,
     pub failed : TestSetCollection,
     pub skipped : TestSetCollection,
+    pub raw_data : Vec<String>,
     pub total: i32
 }
 
@@ -36,7 +37,13 @@ impl OrganizedTestResults {
         let success : TestSetCollection = TestSetCollection::new();
         let failed : TestSetCollection = TestSetCollection::new();
         let skipped : TestSetCollection = TestSetCollection::new();
-        return OrganizedTestResults {  success, failed, skipped, total : 0 };
+        let raw_data : Vec<String> = Vec::new();
+        return OrganizedTestResults {
+            success,
+            failed,
+            skipped,
+            raw_data,
+            total : 0 };
     }
 }
 
