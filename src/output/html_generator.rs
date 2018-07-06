@@ -49,6 +49,8 @@ impl OutputTrait for HtmlOutput {
             && 0 == test_results.failed.len() {
             warning_msg_text = str2string!("No information was found to create report.");
             raw_data = test_results.raw_data.to_vec();
+            raw_data.push(str2string!(""));
+            raw_data.push(str2string!(">>> end of additional data"));
         }
 
         context.add("warning_message", &warning_msg_text);
