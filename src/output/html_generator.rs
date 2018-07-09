@@ -47,7 +47,7 @@ impl OutputTrait for HtmlOutput {
         if 0 == test_results.skipped.len()
             && 0 == test_results.success.len()
             && 0 == test_results.failed.len() {
-            warning_msg_text = str2string!("No information was found to create report.");
+            warning_msg_text = str2string!("No 'cargo test' output was found to create report.");
             raw_data = test_results.raw_data.to_vec();
             raw_data.push(str2string!(""));
             raw_data.push(str2string!(">>> end of additional data"));
