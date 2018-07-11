@@ -38,7 +38,17 @@ use shell::shell_trait::ShellTrait;
 use utils::environment::Environment;
 use utils::logger::init_log;
 
+/**
+    The obvious => the main logic of the app
 
+    The app does 2 things:
+        get cargo test output data
+        display it nicely
+
+    The app is configurable so we use factories to determine
+        how to get cargo test data
+        how to display it
+*/
 fn main() {
     init_log();
 
