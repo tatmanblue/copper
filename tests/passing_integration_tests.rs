@@ -18,3 +18,10 @@ fn success_integration_test_2 () {
 fn success_integration_test_3 () {
     assert!(true)
 }
+
+// testing the name of tests in integration folders by duplicating this test
+// in multiple unit test files
+#[test]
+fn blah_blah_blah() {
+    assert!(true)
+}

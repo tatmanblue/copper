@@ -41,13 +41,14 @@ use utils::logger::init_log;
 /**
     The obvious => the main logic of the app
 
-    The app does 2 things:
+    The app does 3 things:
         get cargo test output data
+        process it into logical units
         display it nicely
 
     The app is configurable so we use factories to determine
-        how to get cargo test data
-        how to display it
+        how to get cargo test data => InputFactory
+        how to display it => OutputFactory
 */
 fn main() {
     init_log();

@@ -3,6 +3,10 @@
 use processors::process_for_individual_test_results::ProcessIndividualTestResults;
 use processors::types::OrganizedTestResults;
 
+/**
+    ProcessingController coordinates the pieces that organizes cargo test output into logical units
+    called IndividualTestResults
+*/
 pub struct ProcessingController {
     pub all_test_lines : Vec<String>
 }

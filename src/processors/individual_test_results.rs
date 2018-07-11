@@ -38,6 +38,11 @@ pub struct IndividualTestResults {
     pub test_details: Vec<String>
 }
 
+/**
+    counting on cargo reporting tests uniquely by:
+        fully namespaces all tests in mods decorated with #[cfg(test)] attribute in the src folder
+        unique names for tests in unit test folder
+*/
 impl PartialEq for IndividualTestResults {
     fn eq(&self, other: &IndividualTestResults) -> bool {
         return self.name == other.name;

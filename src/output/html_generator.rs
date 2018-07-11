@@ -38,6 +38,7 @@ impl OutputTrait for HtmlOutput {
         let tera: Tera = Tera::new(&template_search).unwrap();
         let mut context: Context = Context::new();
 
+        context.add("project_name", &"(project)");
         context.add("title", &"test results");
         context.add("from_location", &env.working_dir);
 
