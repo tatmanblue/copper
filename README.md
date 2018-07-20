@@ -3,6 +3,8 @@
 
 This application provides a pretty UI to "cargo test" output. 
 
+Cargo test output is written to the console.  You can redirect it to a file but it really isn't any more readable.  This project provides an easy to read and easy to navigate web page for reviewing cargo test results.
+
 [![Build Status](https://travis-ci.org/mattraffel/copper.svg?branch=master)](https://travis-ci.org/mattraffel/copper)
 
 
