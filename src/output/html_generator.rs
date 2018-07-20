@@ -38,7 +38,7 @@ impl OutputTrait for HtmlOutput {
         let tera: Tera = Tera::new(&template_search).unwrap();
         let mut context: Context = Context::new();
 
-        context.add("project_name", &"(project)");
+        context.add("project_name", &env.get_working_dir_short_name());
         context.add("title", &"test results");
         context.add("from_location", &env.working_dir);
 
@@ -80,8 +80,4 @@ impl OutputTrait for HtmlOutput {
 #[cfg(test)]
 mod html_generator_tests {
 
-    #[test]
-    fn broken_code() {
-        // hack
-    }
 }

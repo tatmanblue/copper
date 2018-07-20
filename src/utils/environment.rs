@@ -1,5 +1,6 @@
 //! Enviroment type is responsible for data that affects the running enviroment of copper
 
+use std::path::Path;
 use std::process::exit;
 use std::env;
 
@@ -166,5 +167,34 @@ impl Environment {
         }
 
         panic!("expected a file name in command args");
+    }
+
+    /**
+        returns the directory name (only, no path) of working_dir
+    */
+    pub fn get_working_dir_short_name(&self) -> String {
+
+        let dir = self.working_dir.to_string();
+        let os_dir_name = Path::new(&dir).file_name().unwrap();
+        let short_name = os_dir_name.to_str().unwrap();
+
+        return short_name.to_string();
+    }
+}
+
+#[cfg(test)]
+mod environment_tests {
+    use std::path::Path;
+    use utils::environment::Environment;
+
+    #[test]
+    fn get_root_dir() {
+        let env :Environment = Environment::new();
+        let working_dir = env.working_dir;
+
+        println!("working dir '{}'", working_dir);
+        println!("short name is '{:?}'", Path::new(&working_dir).file_name().unwrap());
+
+
     }
 }
