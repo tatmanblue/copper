@@ -26,6 +26,11 @@ pub enum InputTypes {
     Think of this InputTrait implementation as something along the lines of an abstract class v-table pointer of
     in an OO language.   It is used to route function calls to specific implementations.
 
+    The factory returns one of the enums with the associated implementation type allocated within the enum itself.
+    Since consumers have the enum, the InputTrait implementation on it allows the consumer to work with the
+    enum as a "class pointer" and not have to know about the actual implementation details; thereby making the
+    consumer decoupled from the implementation.
+
     The concrete implementation are in their respective files.
 */
 impl InputTrait for InputTypes {
