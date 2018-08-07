@@ -26,8 +26,8 @@ pub enum InputTypes {
     Think of this InputTrait implementation as something along the lines of an abstract class pointer
     or a v-table pointer in an OO language.
 
-    The factory returns one of the enums with the associated implementation type allocated within the enum itself.
-    Since consumers have the enum, the InputTrait implementation on it allows the consumer to work with the
+    The factory returns one of the enums along  with the associated implementation type allocated within the enum itself.
+    Since consumers have the enum, the InputTrait implementation on the enum allows the consumer to work with the
     enum as a "class pointer" and not have to know about the actual implementation details; thereby making the
     consumer decoupled from the implementation.
 
