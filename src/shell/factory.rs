@@ -7,6 +7,10 @@ use shell::console::Console;
 
 /**
     ShellTypes enum
+
+    Unlike other enums/factories patterns in the application, ShellTypes is used a little differently.
+    Environment configuration does not determine which ShellType to use.  Rather, ShellType
+    is determined by OutputType
 */
 pub enum ShellTypes {
     /**
@@ -19,6 +23,21 @@ pub enum ShellTypes {
     Browser(Browser),
 }
 
+
+/**
+    Think of this ShellTrait implementation as something along the lines of an abstract class pointer
+    or a v-table pointer in an OO language.
+
+    The factory returns one of the ShellTypes enums along with the associated implementation type allocated
+    within the enum itself.
+
+    Since consumers have the ShellTypes enum, the ShellTrait implementation on the ShellTypes enum allows the
+    consumer to work with the enum as a "class pointer" and not have to know about the actual implementation
+    details; thereby making the consumer decoupled from the implementation.
+
+    The concrete implementations for ShellTrait are in their respective files.
+
+*/
 impl ShellTrait for ShellTypes {
     /**
     */
