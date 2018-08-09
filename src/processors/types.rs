@@ -5,6 +5,9 @@ use serde::{Deserialize, Serialize};
 use processors::individual_test_results::{IndividualTestResults};
 use processors::test_set::{TestSetFunctions, TestSetCollection};
 
+/**
+    Identifies a line in the input.  a line should represent output from a test
+*/
 enum LineTypes {
     UnitTest,
     IntegrationTest,

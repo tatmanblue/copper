@@ -6,7 +6,7 @@ use shell::browser::Browser;
 use shell::console::Console;
 
 /**
-    ShellTypes enum
+    ShellTypes enum.  Abstracts the means of creating the display of the formatted test results
 
     Unlike other enums/factories patterns in the application, ShellTypes is used a little differently.
     Environment configuration does not determine which ShellType to use.  Rather, ShellType
@@ -54,6 +54,13 @@ impl ShellTrait for ShellTypes {
 pub struct ShellFactory {}
 
 impl ShellFactory {
+    /**
+        allocates a ShellType
+        name = the shell expected
+        data = specific to the shell type, data it needs to correctly spin up.
+
+        Since the OutputTypes knows which shell type it wants, it understands what data means.
+    */
     pub fn get(name : &str, data : &str) -> ShellTypes {
         match name.as_ref() {
             "console" => ShellTypes::Console(Console {} ),
