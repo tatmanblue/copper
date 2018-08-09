@@ -1,4 +1,4 @@
-//! ShellTypes are the handlers of IO for properly display formatted test results
+//! ShellTypes identify the different means of displaying formatted test results
 //! ShellTypes implement ShellTrait and open their display
 
 use shell::shell_trait::ShellTrait;
