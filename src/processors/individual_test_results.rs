@@ -98,6 +98,22 @@ mod individual_test_results_test {
 
         assert_eq!(3, test_one.test_details.len());
     }
+}
+
+
+#[cfg(test)]
+mod individual_test_results_test_smelly {
+
+    use super::*;
+
+    /**
+        this test is suppose to ensure IndividualTestResults id fields are getting incremented for
+        each new entry.   It fails "randomly" when RUST_TEST_THREADS > 1.  Thats because other tests
+        running can cause a change to the global LAST_TEST_ID.  Either this test is bad or the production
+        code is bad.
+
+        TODO: 
+    */
 
     #[test]
     fn id_incremented_for_each_new() {
