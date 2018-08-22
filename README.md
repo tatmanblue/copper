@@ -22,3 +22,7 @@ The simplest method is to direct output from "cargo test" to copper. eg:
 > (another project dir) cargo test | copper
 ## Please note: 
 Do not use --no-capture.  The output is different. Copper currently works with output from cargo test only.
+
+
+# License
+Released under Apache 2.0 and MIT.  See license files in git repo.
