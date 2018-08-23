@@ -108,11 +108,12 @@ mod individual_test_results_test_smelly {
 
     /**
         this test is suppose to ensure IndividualTestResults id fields are getting incremented for
-        each new entry.   It fails "randomly" when RUST_TEST_THREADS > 1.  Thats because other tests
-        running can cause a change to the global LAST_TEST_ID.  Either this test is bad or the production
-        code is bad.
+        each new entry.   It fails "randomly" when RUST_TEST_THREADS > 1.  That's because other tests
+        running can cause a change to the global LAST_TEST_ID.
 
-        TODO: 
+        We have a code smell here.  Either this test is bad or the production code is bad.
+
+        TODO: need to figure out the right solution.
     */
 
     #[test]
