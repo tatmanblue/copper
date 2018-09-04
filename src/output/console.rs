@@ -27,6 +27,9 @@ impl ConsoleOutput {
 impl OutputTrait for ConsoleOutput {
 
     fn generate(&self, test_results : &OrganizedTestResults) -> ShellTypes {
+
+        // TODO:: this doesn't really fit with the intent of generate method
+        // it sould be moved to shell/console
         println!("----------------------------");
         ConsoleOutput::print_section("ignored", &test_results.skipped);
         ConsoleOutput::print_section(&Green.paint("success").to_string(), &test_results.success);

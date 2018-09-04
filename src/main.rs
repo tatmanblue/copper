@@ -49,6 +49,10 @@ use utils::logger::init_log;
     The app is configurable so we use factories to determine
         how to get cargo test data => InputFactory
         how to display it => OutputFactory
+
+    The factories become part of the O and I in SOLID
+        O open for extension:  we can add new types wihtout breaking the system
+        I inversion of control:  the main method "asks" for which type to use, rather than allocate it
 */
 fn main() {
     init_log();
@@ -67,6 +71,7 @@ fn main() {
     let organized_results = controller.execute();
 
     trace!("generating output");
+    // TODO: this should be refactored into another OutputTypes that includes console output
     if true == env.include_console_format {
         OutputFactory::get("debug").generate(&organized_results).open();
     }

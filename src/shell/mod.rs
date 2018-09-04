@@ -5,5 +5,6 @@
 
 pub mod browser;
 pub mod console;
+pub mod console_browser;
 pub mod factory;
 pub mod shell_trait;

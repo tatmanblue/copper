@@ -16,6 +16,9 @@ use utils::environment::Environment;
     InputTypes enums becomes a "placeholder" (so to speak) of the concrete implementation of
     InputTrait which handles the actual input reader.   This allows getting around "known size"
     requirements rust has on return types.
+
+    It solves for the O in solid:  open for extension.  add a new enum and you add a new behavior into the system
+    without breaking existing implementations
 */
 pub enum InputTypes {
     StdIn(StdReader),

@@ -4,6 +4,7 @@
 use shell::shell_trait::ShellTrait;
 use shell::browser::Browser;
 use shell::console::Console;
+use shell::console_browser::ConsoleBrowser;
 
 /**
     ShellTypes enum.  Abstracts the means of creating the display of the formatted test results
@@ -11,6 +12,9 @@ use shell::console::Console;
     Unlike other enums/factories patterns in the application, ShellTypes is used a little differently.
     Environment configuration does not determine which ShellType to use.  Rather, ShellType
     is determined by OutputType
+
+    It solves for the O in solid:  open for extension.  add a new enum and you add a new behavior into the system
+    without breaking existing implementations
 */
 pub enum ShellTypes {
     /**
@@ -21,6 +25,10 @@ pub enum ShellTypes {
         represents html display in a browser
     */
     Browser(Browser),
+    /**
+        dittly do it does both
+    */
+    CombinedConsoleBrowser(ConsoleBrowser)
 }
 
 
@@ -45,6 +53,7 @@ impl ShellTrait for ShellTypes {
         match *self {
             ShellTypes::Console(ref console) => console.open(),
             ShellTypes::Browser(ref browser) => browser.open(),
+            ShellTypes::CombinedConsoleBrowser(ref combined) => combined.open(),
         }
     }
 }
@@ -65,6 +74,7 @@ impl ShellFactory {
         match name.as_ref() {
             "console" => ShellTypes::Console(Console {} ),
             "browser" => ShellTypes::Browser(Browser { file : data.to_string() } ),
+            "combined" => ShellTypes::CombinedConsoleBrowser(ConsoleBrowser {file : data.to_string() }),
             &_ => {
                 eprintln!("Error in ShellFactory processing get for name of '{}'", name);
                 panic!("Error in ShellFactory processing get request")

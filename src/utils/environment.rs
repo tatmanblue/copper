@@ -92,6 +92,7 @@ impl Environment {
         let home_dir : String = Environment::get_home_dir();
         let template_dir : String = format!("{}{}", home_dir, "/templates");
         let results_dir : String = format!("{}{}", home_dir, "/results");
+        let mut output_format: String = "default".to_string();
         let mut read_from_file: bool = false;
         let mut input_file_name: String = "".to_string();
 
@@ -100,11 +101,15 @@ impl Environment {
             input_file_name = Environment::get_file_name_parameter();
         }
 
+        if true == Environment::has_output_parameter() {
+            output_format = Environment::get_output_parameter();
+        }
+
         return Environment {
             working_dir,
             template_dir,
             results_dir,
-            output_format: "default".to_string(),
+            output_format,
             include_console_format: false,
             read_from_file,
             input_file_name
@@ -135,7 +140,7 @@ impl Environment {
     }
 
     /**
-        checks if -f/--file is on the command line
+        checks for -f/--file in the command line input
     */
     pub fn has_file_name_parameter() -> bool {
         if env::args().find(|a| a == "-f" || a == "--file").is_some() {
@@ -145,7 +150,41 @@ impl Environment {
     }
 
     /**
-        returns filename when -f/--file is on the command line
+        checks for -o/--output in the command line input
+    */
+    pub fn has_output_parameter() -> bool {
+        if env::args().find(|a| a == "-o" || a == "--output").is_some() {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+        returns output argument when -o/--output is in the command line input
+    */
+    pub fn get_output_parameter() -> String {
+        if Environment::has_output_parameter() {
+            let mut found_it : bool = false;
+
+            for argument in env::args() {
+                if true == found_it {
+                    let left : String = argument.from_left(1);
+                    if "-" != left {
+                        return argument;
+                    }
+                }
+
+                if "-o" == argument || "--output" == argument {
+                    found_it = true;
+                }
+            }
+        }
+
+        panic!("expected a output format parameter");
+    }
+
+    /**
+        returns filename argument when -f/--file is in the command line input
     */
     pub fn get_file_name_parameter() -> String {
 
