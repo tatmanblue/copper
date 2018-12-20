@@ -12,6 +12,67 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="">
+    // https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+    function fallbackCopyTextToClipboard(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Fallback: Copying text command was ' + msg);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    function copyTextToClipboard(text) {
+        if (!navigator.clipboard) {
+            fallbackCopyTextToClipboard(text);
+            return;
+        }
+
+        navigator.clipboard.writeText(text).then(function() {
+            console.log('Async: Copying to clipboard was successful!');
+        }, function(err) {
+            console.error('Async: Could not copy text: ', err);
+        });
+    }
+
+    function copyTestNameToClipboard(testName) {
+        copyTextToClipboard(testName);
+    }
+
+    function copyTestDetailsToClipboard(parentId) {
+        var array = new Array();
+
+        $('div','#' + parentId + '_error_group_collapse_details').each(function(){
+            array.push($(this).html());
+        });
+
+
+        var message = array.reduce(function(pre, next) {
+            return pre + '\n' + next;
+        });
+
+        copyTextToClipboard(message);
+    }
+    </script>
+    <style>
+        .btn {
+            opacity: 0;
+        }
+
+        .panel-body:hover .btn {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
 <div class="jumbotron text-center">
@@ -77,12 +138,16 @@
             <div id="error_group_collapse" class="panel-collapse collapse in">
               <div class="panel-body">
                   {% for test in failed_tests %}
-                    <div><a data-toggle="collapse" href="#{{ test.id }}_error_group_collapse">{{ test.name }}</a></div>
+                    <div>
+                        <a data-toggle="collapse" href="#{{ test.id }}_error_group_collapse">{{ test.name }}</a>
+                        <button type="button" class="btn btn-link bnt-sm" onclick="copyTestNameToClipboard('{{ test.name }}')">(Copy)</button>
+                        <button type="button" class="btn btn-link bnt-sm" onclick="copyTestDetailsToClipboard('{{ test.id }}')">(Copy Details)</button>
+                    </div>
 
                     <!-- details of failed test -->
                     <div class="panel panel-info">
                         <div id="{{ test.id }}_error_group_collapse" class="panel-collapse collapse in">
-                            <div class="panel-body">
+                            <div id="{{ test.id }}_error_group_collapse_details" class="panel-body">
                                 {% for testline in test.test_details %}
                                     <div>{{ testline }}</div>
                                 {% endfor %}
@@ -96,9 +161,6 @@
         {% endif %}
 
     </div>
-
-
-
 
 </div>
 </body>
