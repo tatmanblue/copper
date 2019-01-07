@@ -1,11 +1,17 @@
 .
 ├── Cargo.lock
 ├── Cargo.toml
-├── README.md
 ├── deploy.sh
-├── results.txt
+├── docs
+│   ├── _config.yml
+│   └── README.md
+├── LICENSE-APACHE
+├── LICENSE-MIT
+├── README.md
 ├── src
 │   ├── input
+│   │   ├── factory.rs
+│   │   ├── from_file.rs
 │   │   ├── from_stdin.rs
 │   │   ├── input_trait.rs
 │   │   └── mod.rs
@@ -20,10 +26,12 @@
 │   │   ├── individual_test_results.rs
 │   │   ├── mod.rs
 │   │   ├── process_for_individual_test_results.rs
+│   │   ├── processing_controller.rs
 │   │   ├── test_set.rs
 │   │   └── types.rs
 │   ├── shell
 │   │   ├── browser.rs
+│   │   ├── console_browser.rs
 │   │   ├── console.rs
 │   │   ├── factory.rs
 │   │   ├── mod.rs
@@ -37,6 +45,7 @@
 │   │   └── passing.rs
 │   └── utils
 │       ├── environment.rs
+│       ├── file_utils.rs
 │       ├── logger.rs
 │       ├── macros.rs
 │       ├── mod.rs
@@ -48,4 +57,4 @@
 │   └── passing_integration_tests.rs
 └── tree.txt
 
-91 directories, 521 files
+10 directories, 47 files
