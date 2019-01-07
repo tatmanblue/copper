@@ -38,9 +38,9 @@ impl OutputTrait for HtmlOutput {
         let tera: Tera = Tera::new(&template_search).unwrap();
         let mut context: Context = Context::new();
 
-        context.add("project_name", &env.get_working_dir_short_name());
-        context.add("title", &"test results");
-        context.add("from_location", &env.working_dir);
+        context.insert("project_name", &env.get_working_dir_short_name());
+        context.insert("title", &"test results");
+        context.insert("from_location", &env.working_dir);
 
         let mut warning_msg_text : String = str2string!("");
         let mut raw_data : Vec<String> = Vec::new();
@@ -54,17 +54,17 @@ impl OutputTrait for HtmlOutput {
             raw_data.push(str2string!(">>> end of additional data"));
         }
 
-        context.add("warning_message", &warning_msg_text);
-        context.add("raw_data", &raw_data);
+        context.insert("warning_message", &warning_msg_text);
+        context.insert("raw_data", &raw_data);
 
         trace!("skipped test count {}", test_results.skipped.len());
-        context.add("ignored_tests",&test_results.skipped);
+        context.insert("ignored_tests",&test_results.skipped);
 
         trace!("success test count {}", test_results.success.len());
-        context.add("successful_tests",&test_results.success);
+        context.insert("successful_tests",&test_results.success);
 
         trace!("failed test count {}", test_results.failed.len());
-        context.add("failed_tests",&test_results.failed);
+        context.insert("failed_tests",&test_results.failed);
         let rendered = tera.render("index.html", &context).expect("Failed to render template");
 
         trace!("results expected at: '{}'", env.results_dir);
