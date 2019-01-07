@@ -56,10 +56,19 @@
             array.push($(this).html());
         });
 
-        var message = array.reduce(function(pre, next) {
-            return pre + '\n' + next;
+        var message = array.join('\n');
+
+        copyTextToClipboard(message);
+    }
+
+    function copyAllTestNamesToClipboard() {
+        var array = new Array();
+
+        $('#error_group_collapse a').each(function(){
+            array.push($(this).html());
         });
 
+        var message = array.join('\n');
         copyTextToClipboard(message);
     }
     </script>
@@ -69,6 +78,10 @@
         }
 
         .panel-body-header:hover .btn {
+            opacity: 1;
+        }
+
+        .panel-title:hover .btn {
             opacity: 1;
         }
     </style>
@@ -132,6 +145,7 @@
             <div class="panel-heading">
               <h4 class="panel-title">
                   <a data-toggle="collapse" href="#error_group_collapse">{{ failed_tests | length }} failed tests </a>
+                  <button type="button" class="btn btn-link bnt-sm" onclick="copyAllTestNamesToClipboard()">(Copy)</button>
               </h4>
             </div>
             <div id="error_group_collapse" class="panel-collapse collapse in">
